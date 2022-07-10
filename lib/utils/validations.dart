@@ -1,5 +1,5 @@
-import 'package:shopping/utils/int_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping/utils/int_extensions.dart';
 
 abstract class Validation {
   const Validation();
@@ -12,7 +12,7 @@ class PasswordValidation extends Validation {
   @override
   String? validate(value) {
     if(value == null || value.isEmpty){
-      return 'Field can\'t be empty';
+      return "Field can't be empty";
     }
 
     if(value.length < 5){
@@ -53,7 +53,7 @@ class UsernameValidation extends Validation {
   @override
   String? validate(value) {
     if(value == null || value.isEmpty){
-      return 'Field can\'t be empty';
+      return "Field can't be empty";
     }
 
     if(value.length < 5){
@@ -76,7 +76,7 @@ class EmailValidation extends Validation {
   @override
   String? validate(value) {
     if(value == null || value.isEmpty){
-      return 'Field can\'t be empty';
+      return "Field can't be empty";
     }
 
     if(!emailRegex.hasMatch(value)){

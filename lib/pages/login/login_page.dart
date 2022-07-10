@@ -1,7 +1,6 @@
-import 'package:shopping/routes/paths.dart';
+import 'package:flutter/material.dart';
 import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';
-import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -42,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text('Don\'t have account? Register now!'),
+                child: const Text("Don't have account? Register now!"),
               ),
             ],
             children: [

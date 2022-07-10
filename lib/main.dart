@@ -5,6 +5,7 @@ import 'package:shopping/routes/paths.dart';
 import 'package:shopping/routes/routes.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -18,7 +19,7 @@ class Shopping extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Shopping',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
