@@ -15,8 +15,8 @@ class PasswordValidation extends Validation {
       return "Field can't be empty";
     }
 
-    if(value.length < 5){
-      return 'Min length is 5!';
+    if(value.length < 6){
+      return 'Min length is 6!';
     }
 
     if(!value.codeUnits.any((element) => element.isDigit)){
@@ -89,5 +89,4 @@ class EmailValidation extends Validation {
 
     return null;
   }
-
 }

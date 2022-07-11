@@ -5,7 +5,7 @@ class UsersRepository {
   final firestore = FirebaseFirestore.instance;
   final collectionName = 'users';
 
-  Future<List<User>> findAllUsers(User user) async {
+  Future<List<User>> findAllUsers() async {
     final querySnapshot = await firestore.collection(collectionName).get();
     final users = querySnapshot.docs.map((doc) {
       final json = {
@@ -17,5 +17,14 @@ class UsersRepository {
     }).toList();
 
     return users;
+  }
+
+  Future<List<String>> loadAllEmails() async {
+    final querySnapshot = await firestore.collection(collectionName).get();
+    final emails = querySnapshot.docs.map(
+      (doc) => doc.data()['email'].toString()
+    ).toList();
+
+    return emails;
   }
 }

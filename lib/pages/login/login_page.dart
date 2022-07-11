@@ -1,4 +1,9 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping/repositories/AuthRepository.dart';
+import 'package:shopping/repositories/UsersRepository.dart';
+import 'package:shopping/routes/paths.dart';
 import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';
 
@@ -11,8 +16,23 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool keepLogged = false;
+  late UsersRepository usersRepository = context.read<UsersRepository>();
+  late AuthRepository authRepository = context.read<AuthRepository>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void onKeepLoggedChange(value) => setState(() => keepLogged = value);
+  void login() {
+    authRepository.login(
+      emailController.text, passwordController.text
+    ).then((value) {
+      log('Logged');
+    }).catchError((err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid credentials'))
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(10),
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: login,
                     child: const Padding(
                       padding: EdgeInsets.all(10),
                       child: Text('LOGIN'),
@@ -40,7 +60,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(register);
+                },
                 child: const Text("Don't have account? Register now!"),
               ),
             ],
@@ -55,17 +77,19 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
+                  controller: emailController,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.person),
-                      labelText: 'Username'
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.email),
+                    labelText: 'Email',
                   ),
                 ),
               ),
-              const PasswordInput(
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.password),
-                padding: EdgeInsets.all(10),
+              PasswordInput(
+                controller: passwordController,
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.password),
+                padding: const EdgeInsets.all(10),
                 labelText: 'Password',
               ),
               Padding(
@@ -75,10 +99,12 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: onKeepLoggedChange,
                   title: const Text('Keep logged?'),
                   shape: const RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(5))
+                    side: BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
                 ),
               )

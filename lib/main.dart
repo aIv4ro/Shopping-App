@@ -22,9 +22,13 @@ class Shopping extends StatelessWidget {
       title: 'Shopping',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder()
+        )
       ),
       routes: routes,
       initialRoute: login,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
