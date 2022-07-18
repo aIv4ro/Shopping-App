@@ -1,8 +1,9 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping/repositories/AuthRepository.dart';
-import 'package:shopping/repositories/UsersRepository.dart';
+import 'package:shopping/repositories/auth_repository.dart';
+import 'package:shopping/repositories/users_repository.dart';
 import 'package:shopping/routes/paths.dart';
 import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';
@@ -22,11 +23,27 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void onKeepLoggedChange(value) => setState(() => keepLogged = value);
+
+
+  @override
+  void initState() {
+    super.initState();
+    if(authRepository.currentUser != null) {
+      usersRepository.findUserByEmail(authRepository.currentUser!.email!).then((value) {
+        UsersRepository.currentUser = value;
+        Navigator.of(context).pushReplacementNamed(home);
+      });
+    }
+  }
+
   void login() {
     authRepository.login(
       emailController.text, passwordController.text
     ).then((value) {
-      log('Logged');
+      usersRepository.findUserByEmail(authRepository.currentUser!.email!).then((value) {
+        UsersRepository.currentUser = value;
+        Navigator.of(context).pushReplacementNamed(home);
+      });
     }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Invalid credentials'))
@@ -55,7 +72,10 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: login,
                     child: const Padding(
                       padding: EdgeInsets.all(10),
-                      child: Text('LOGIN'),
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text('LOGIN'),
+                      ),
                     )
                 ),
               ),

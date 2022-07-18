@@ -18,6 +18,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -25,6 +27,8 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
+    surnameController.dispose();
   }
 
   @override
@@ -68,8 +72,9 @@ class _RegisterPageState extends State<RegisterPage> {
               child: ListWithFooter(
                 padding: const EdgeInsets.all(10),
                 footer: [
-                  SizedBox(
+                  Container(
                     width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: state.status == RegisterStatus.creatingUser ?
                     const Center(child: CircularProgressIndicator(),) :
                     ElevatedButton(
@@ -84,8 +89,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         bloc.add(
                           CreateUser(
-                              email: emailController.text,
-                              password: passwordController.text
+                            email: emailController.text,
+                            name: nameController.text,
+                            surname: surnameController.text,
+                            password: passwordController.text
                           ),
                         );
                       },
@@ -100,12 +107,58 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: EmailValidation(emails: state.emails).validate,
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: EmailValidation(emails: state.emails).validate,
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if(value == null || value.isEmpty) {
+                          return "Field can't be empty";
+                        }
+
+                        return null;
+                      },
+                      controller: nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        prefixIcon: Icon(Icons.person),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if(value == null || value.isEmpty) {
+                          return "Field can't be empty";
+                        }
+
+                        return null;
+                      },
+                      controller: surnameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Surname',
+                        prefixIcon: Icon(Icons.person),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -117,6 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: passwordController,
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.password),
+                    padding: const EdgeInsets.symmetric(horizontal: 10,),
                   ),
                   const SizedBox(
                     height: 10,
@@ -128,6 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         .validate,
                     labelText: 'Repeat Password',
                     prefixIcon: const Icon(Icons.password),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                   ),
                   const SizedBox(
                     height: 10,

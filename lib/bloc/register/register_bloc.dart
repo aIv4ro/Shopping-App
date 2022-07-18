@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/bloc/register/register_event.dart';
 import 'package:shopping/bloc/register/register_state.dart';
-import 'package:shopping/repositories/AuthRepository.dart';
-import 'package:shopping/repositories/UsersRepository.dart';
+import 'package:shopping/repositories/auth_repository.dart';
+import 'package:shopping/repositories/users_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({
@@ -39,6 +39,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     emit(state.copyWith(status: () => RegisterStatus.creatingUser));
       try{
         await authRepository.registerUser(event.email, event.password);
+        await usersRepository.createUser(event.email, event.name, event.surname);
         emit(state.copyWith(status: () => RegisterStatus.userRegistered));
       }catch(err) {
         emit(state.copyWith(status: () => RegisterStatus.registerError));
