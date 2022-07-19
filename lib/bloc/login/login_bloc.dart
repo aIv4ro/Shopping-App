@@ -5,8 +5,8 @@ import 'package:shopping/bloc/login/login_event.dart';
 import 'package:shopping/bloc/login/login_state.dart';
 import 'package:shopping/repositories/auth_repository.dart';
 
-class LoginBlock extends Bloc<LoginEvent, LoginState> {
-  LoginBlock({
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  LoginBloc({
     required this.authRepository,
   }) : super(
     const LoginState()

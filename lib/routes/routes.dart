@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping/bloc/login/login_bloc.dart';
 import 'package:shopping/bloc/register/register_bloc.dart';
 import 'package:shopping/bloc/register/register_event.dart';
 import 'package:shopping/pages/home/home_page.dart';
@@ -11,12 +12,14 @@ import 'package:shopping/routes/paths.dart';
 
 final routes = <String, WidgetBuilder>{
   login: (context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<UsersRepository>(create: (_) => UsersRepository()),
-        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
-      ],
-      child: const LoginPage(),
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: BlocProvider(
+        create: (blocProviderContext) => LoginBloc(
+          authRepository: blocProviderContext.read(),
+        ),
+        child: const LoginPage(),
+      ),
     );
   },
   register: (context) {
