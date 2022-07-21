@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PasswordInput extends StatefulWidget {
-  const PasswordInput({
-    Key? key, this.controller, this.prefixIcon, this.labelText,
-    this.border, this.padding = EdgeInsets.zero, this.validator,
-    this.autovalidateMode
-  }) : super(key: key);
+  const PasswordInput(
+      {Key? key,
+      this.controller,
+      this.prefixIcon,
+      this.labelText,
+      this.border,
+      this.padding = EdgeInsets.zero,
+      this.validator,
+      this.autovalidateMode})
+      : super(key: key);
 
   final TextEditingController? controller;
   final Widget? prefixIcon;

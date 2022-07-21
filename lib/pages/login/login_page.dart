@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/bloc/login/login_bloc.dart';
@@ -19,39 +17,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool keepLogged = false;
   late UserRepository userRepository = context.read<UserRepository>();
   late AuthRepository authRepository = context.read<AuthRepository>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void onKeepLoggedChange(value) => setState(() => keepLogged = value);
-
-
   @override
   void initState() {
     super.initState();
-    if(authRepository.currentUser != null) {
-      Navigator.of(context).pushReplacementNamed(home);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping'),
+        title: const Text('Login'),
       ),
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           final status = state.status;
 
-          if(status == LoginStatus.authenticated) {
+          if (status == LoginStatus.authenticated) {
             Navigator.of(context).pushReplacementNamed(home);
             return;
           }
 
-          if(status == LoginStatus.authenticationError) {
+          if (status == LoginStatus.authenticationError) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('User or password invalid')),
             );
@@ -61,10 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: Center(
           child: Container(
-            constraints: const BoxConstraints(
-                maxWidth: 600,
-                maxHeight: 800
-            ),
+            constraints: const BoxConstraints(maxWidth: 600, maxHeight: 800),
             child: ListWithFooter(
               footer: [
                 Container(
@@ -72,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   child: BlocBuilder<LoginBloc, LoginState>(
                     builder: (context, state) {
-                      if(state.status == LoginStatus.authenticating){
+                      if (state.status == LoginStatus.authenticating) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
@@ -80,9 +68,9 @@ class _LoginPageState extends State<LoginPage> {
 
                       return ElevatedButton(
                         onPressed: () {
-                          context.read<LoginBloc>().add(
-                            Authenticate(email: emailController.text, password: passwordController.text)
-                          );
+                          context.read<LoginBloc>().add(Authenticate(
+                              email: emailController.text,
+                              password: passwordController.text));
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(10),
@@ -103,13 +91,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
@@ -119,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: Icon(Icons.email),
                       labelText: 'Email',
                     ),
+                    keyboardType: TextInputType.emailAddress,
                   ),
                 ),
                 PasswordInput(
@@ -128,26 +110,10 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.all(10),
                   labelText: 'Password',
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CheckboxListTile(
-                    value: keepLogged,
-                    onChanged: onKeepLoggedChange,
-                    title: const Text('Keep logged?'),
-                    shape: const RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
-        )
+        ),
       ),
     );
   }

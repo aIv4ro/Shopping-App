@@ -27,7 +27,7 @@ class Shopping extends StatelessWidget {
         )
       ),
       routes: routes,
-      initialRoute: login,
+      initialRoute: splash,
       debugShowCheckedModeBanner: false,
     );
   }

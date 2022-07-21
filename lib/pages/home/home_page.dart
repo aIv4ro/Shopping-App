@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Text(UserRepository.currentUser.fullName)
+          Text(UserRepository.currentUser!.fullName)
         ],
       ),
     );

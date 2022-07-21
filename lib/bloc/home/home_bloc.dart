@@ -35,7 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       state.copyWith(status: () => HomeStatus.loadingUserData),
     );
 
-    final authenticatedUserEmail = authRepository.currentUser!.email!;
+    final authenticatedUserEmail = AuthRepository.currentUser!.email!;
     final currentUser = await userRepository.findUserByEmail(authenticatedUserEmail);
 
     emit(
