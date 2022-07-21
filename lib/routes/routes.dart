@@ -7,7 +7,7 @@ import 'package:shopping/pages/home/home_page.dart';
 import 'package:shopping/pages/login/login_page.dart';
 import 'package:shopping/pages/register/register_page.dart';
 import 'package:shopping/repositories/auth_repository.dart';
-import 'package:shopping/repositories/users_repository.dart';
+import 'package:shopping/repositories/user_repository.dart';
 import 'package:shopping/routes/paths.dart';
 
 final routes = <String, WidgetBuilder>{
@@ -25,7 +25,7 @@ final routes = <String, WidgetBuilder>{
   register: (context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<UsersRepository>(create: (_) => UsersRepository()),
+        RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
       ],
       child: BlocProvider(

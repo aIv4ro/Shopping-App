@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/repositories/auth_repository.dart';
-import 'package:shopping/repositories/users_repository.dart';
+import 'package:shopping/repositories/user_repository.dart';
 import 'package:shopping/routes/paths.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Text(UsersRepository.currentUser.fullName)
+          Text(UserRepository.currentUser.fullName)
         ],
       ),
     );

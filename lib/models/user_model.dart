@@ -1,9 +1,11 @@
 import 'package:shopping/utils/string_extensions.dart';
 
 class User {
-  User({
-    required this.id, required this.email,
-    required this.name, required this.surname
+  const User({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.surname
   });
 
   factory User.fromJson(Map<String, dynamic> json){
@@ -20,10 +22,12 @@ class User {
     );
   }
 
+  static const empty = User(id: '', email: '', name: '', surname: '');
+
   final String id;
-  String email;
-  String name;
-  String surname;
+  final String email;
+  final String name;
+  final String surname;
 
   Map<String, dynamic> toJson() {
     return {

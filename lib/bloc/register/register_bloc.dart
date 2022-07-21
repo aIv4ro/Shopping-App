@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/bloc/register/register_event.dart';
 import 'package:shopping/bloc/register/register_state.dart';
 import 'package:shopping/repositories/auth_repository.dart';
-import 'package:shopping/repositories/users_repository.dart';
+import 'package:shopping/repositories/user_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({
@@ -16,7 +16,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<CreateUser>(_onCreateUser);
   }
 
-  final UsersRepository usersRepository;
+  final UserRepository usersRepository;
   final AuthRepository authRepository;
 
   Future<void> _onLoadEmails(

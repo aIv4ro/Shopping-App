@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping/models/user_model.dart';
 
-class UsersRepository {
+class UserRepository {
   final firestore = FirebaseFirestore.instance;
   final collectionName = 'users';
 
-  static late User currentUser;
+  static User? currentUser;
 
   Future<List<User>> findAllUsers() async {
     final querySnapshot = await firestore.collection(collectionName).get();

@@ -6,7 +6,7 @@ import 'package:shopping/bloc/login/login_bloc.dart';
 import 'package:shopping/bloc/login/login_event.dart';
 import 'package:shopping/bloc/login/login_state.dart';
 import 'package:shopping/repositories/auth_repository.dart';
-import 'package:shopping/repositories/users_repository.dart';
+import 'package:shopping/repositories/user_repository.dart';
 import 'package:shopping/routes/paths.dart';
 import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';
@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool keepLogged = false;
-  late UsersRepository usersRepository = context.read<UsersRepository>();
+  late UserRepository userRepository = context.read<UserRepository>();
   late AuthRepository authRepository = context.read<AuthRepository>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -34,21 +34,6 @@ class _LoginPageState extends State<LoginPage> {
     if(authRepository.currentUser != null) {
       Navigator.of(context).pushReplacementNamed(home);
     }
-  }
-
-  void login() {
-    authRepository.login(
-      emailController.text, passwordController.text
-    ).then((value) {
-      usersRepository.findUserByEmail(authRepository.currentUser!.email!).then((value) {
-        UsersRepository.currentUser = value;
-        Navigator.of(context).pushReplacementNamed(home);
-      });
-    }).catchError((err) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid credentials'))
-      );
-    });
   }
 
   @override
