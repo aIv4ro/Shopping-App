@@ -10,39 +10,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required this.authRepository,
     required this.userRepository,
-  }) : super(
-    const HomeState()
-  ) {
+  }) : super(const HomeState()) {
     on<CloseSession>(_closeSession);
-    on<LoadAuthenticatedUser>(_loadAuthenticatedUser);
   }
 
   final AuthRepository authRepository;
   final UserRepository userRepository;
 
-  Future<void> _closeSession(CloseSession event, Emitter<HomeState> emit) async {
+  Future<void> _closeSession(
+      CloseSession event, Emitter<HomeState> emit) async {
     emit(
-      state.copyWith(status: () => HomeStatus.loggingOut)
+      state.copyWith(
+        status: () => HomeStatus.loggingOut,
+      ),
     );
     await authRepository.logout();
     emit(
-      state.copyWith(status: () => HomeStatus.loggedOut)
-    );
-  }
-
-  Future<void> _loadAuthenticatedUser(LoadAuthenticatedUser event, Emitter<HomeState> emit) async {
-    emit(
-      state.copyWith(status: () => HomeStatus.loadingUserData),
-    );
-
-    final authenticatedUserEmail = AuthRepository.currentUser!.email!;
-    final currentUser = await userRepository.findUserByEmail(authenticatedUserEmail);
-
-    emit(
       state.copyWith(
-        status: () => HomeStatus.success,
-        currentUser: () => currentUser,
-      )
+        status: () => HomeStatus.loggedOut,
+      ),
     );
   }
 }

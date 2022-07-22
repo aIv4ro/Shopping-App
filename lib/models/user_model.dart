@@ -1,14 +1,13 @@
 import 'package:shopping/utils/string_extensions.dart';
 
 class User {
-  const User({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.surname
-  });
+  const User(
+      {required this.id,
+      required this.email,
+      required this.name,
+      required this.surname});
 
-  factory User.fromJson(Map<String, dynamic> json){
+  factory User.fromJson(Map<String, dynamic> json) {
     final id = json['id'];
     final email = json['email'];
     final name = json['name'];
@@ -22,13 +21,6 @@ class User {
     );
   }
 
-  static const empty = User(id: '', email: '', name: '', surname: '');
-
-  final String id;
-  final String email;
-  final String name;
-  final String surname;
-
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -37,6 +29,13 @@ class User {
       'surname': surname,
     };
   }
+
+  static const empty = User(id: '', email: '', name: '', surname: '');
+
+  final String id;
+  final String email;
+  final String name;
+  final String surname;
 
   @override
   String toString() {

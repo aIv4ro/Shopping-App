@@ -7,10 +7,6 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadAuthenticatedUser extends HomeEvent {
-  const LoadAuthenticatedUser();
-}
-
 class CloseSession extends HomeEvent {
   const CloseSession();
 }
