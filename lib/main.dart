@@ -21,11 +21,9 @@ class Shopping extends StatelessWidget {
     return MaterialApp(
       title: 'Shopping',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder()
-        )
-      ),
+          primarySwatch: Colors.blue,
+          inputDecorationTheme:
+              const InputDecorationTheme(border: OutlineInputBorder())),
       routes: routes,
       initialRoute: splash,
       debugShowCheckedModeBanner: false,
