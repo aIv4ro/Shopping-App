@@ -4,7 +4,7 @@ class SearchField<T> extends StatefulWidget {
   const SearchField({
     Key? key,
     this.items = const [],
-    this.labelText = '',
+    this.labelText,
     this.padding = EdgeInsets.zero,
     this.prefixIcon,
     this.maxSuggestionsHeight = double.infinity,
@@ -16,7 +16,7 @@ class SearchField<T> extends StatefulWidget {
   }) : super(key: key);
 
   final List<T> items;
-  final String labelText;
+  final String? labelText;
   final Widget? prefixIcon;
   final bool Function(T item, String input) match;
   final Widget Function(T item) buildItem;

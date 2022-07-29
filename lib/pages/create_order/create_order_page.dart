@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shopping/widgets/expandable_fab.dart';
 import 'package:shopping/widgets/search_field.dart';
 
 class CreateOrderPage extends StatefulWidget {
@@ -21,9 +22,18 @@ class CreateOrderPageState extends State<CreateOrderPage> {
       appBar: AppBar(
         title: const Text('Create Order'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.check),
+      floatingActionButton: ExpandableFab(
+        distance: 100,
+        children: [
+          ActionButton(
+            icon: const Icon(Icons.shopping_basket_outlined),
+            onPressed: () {},
+          ),
+          ActionButton(
+            icon: const Icon(Icons.check),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -41,7 +51,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                   'Maximiliano',
                   'Jose'
                 ],
-                maxSuggestionsHeight: 100,
+                labelText: 'Send to...',
                 padding: const EdgeInsets.all(10),
                 match: (item, input) => item.contains(input),
                 buildItem: (item) {
@@ -80,7 +90,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                     }
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
