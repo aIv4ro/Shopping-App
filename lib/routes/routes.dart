@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/bloc/create_order/create_order_bloc.dart';
+import 'package:shopping/bloc/create_order/create_order_event.dart';
 import 'package:shopping/bloc/home/home_bloc.dart';
 import 'package:shopping/bloc/login/login_bloc.dart';
 import 'package:shopping/bloc/register/register_bloc.dart';
@@ -80,6 +81,8 @@ final routes = <String, WidgetBuilder>{
           userRepository: blocProviderContext.read(),
           productRepository: blocProviderContext.read(),
           orderRepository: blocProviderContext.read(),
+        )..add(
+          const InitialLoadEvent(),
         ),
         child: const CreateOrderPage(),
       ),

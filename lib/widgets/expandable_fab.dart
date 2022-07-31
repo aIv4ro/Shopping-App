@@ -78,6 +78,7 @@ class _ExpandableFabState extends State<ExpandableFab>
     return FloatingActionButton(
       onPressed: _toggle,
       backgroundColor: theme.colorScheme.onPrimary,
+      heroTag: 'closeButton',
       child: Icon(
         Icons.close,
         color: theme.primaryColor,
@@ -123,6 +124,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
             onPressed: _toggle,
+            heroTag: 'openButton',
             child: const Icon(Icons.create),
           ),
         ),

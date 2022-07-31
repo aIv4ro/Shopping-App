@@ -7,6 +7,12 @@ abstract class CreateOrderEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitialLoadEvent extends CreateOrderEvent {
+  const InitialLoadEvent();
+
+  @override
+  List<Object> get props => [];
+}
 
 class CreateProductEvent extends CreateOrderEvent {
   const CreateProductEvent({

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:shopping/bloc/create_order/create_order_bloc.dart';
 import 'package:shopping/bloc/create_order/create_order_event.dart';
 import 'package:shopping/bloc/create_order/create_order_state.dart';
+import 'package:shopping/models/user_model.dart';
 import 'package:shopping/utils/validations.dart';
 import 'package:shopping/widgets/expandable_fab.dart';
 import 'package:shopping/widgets/search_field.dart';
@@ -55,7 +56,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
   final dateController = TextEditingController();
   final userController = TextEditingController();
   late final CreateOrderBloc _bloc;
-  String? itemSelected;
+  User? itemSelected;
 
   @override
   void initState() {
@@ -119,21 +120,28 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                SearchField<String>(
-                  items: users,
-                  labelText: 'Send to...',
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  match: (item, input) => item.contains(input),
-                  buildItem: (item) {
-                    return Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      child: Text(item),
-                    );
+                BlocBuilder<CreateOrderBloc, CreateOrderState>(
+                  buildWhen: (previous, current) {
+                    return previous.users != current.users; 
                   },
-                  onItemSelected: (item) => itemSelected = item,
-                  controller: userController,
-                  itemSelectedString: (item) => item,
+                  builder: (context, state) {
+                    return SearchField<User>(
+                      items: state.users,
+                      labelText: 'Send to...',
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      match: (item, input) => item.fullName.toLowerCase().contains(input.toLowerCase()),
+                      buildItem: (item) {
+                        return Container(
+                          padding: const EdgeInsets.all(20),
+                          width: double.infinity,
+                          child: Text(item.fullName),
+                        );
+                      },
+                      onItemSelected: (item) => itemSelected = item,
+                      controller: userController,
+                      itemSelectedString: (item) => item.fullName,
+                    );
+                  }
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
