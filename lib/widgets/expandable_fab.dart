@@ -73,25 +73,14 @@ class _ExpandableFabState extends State<ExpandableFab>
   }
 
   Widget _buildTapToCloseFab() {
-    return SizedBox(
-      width: 56,
-      height: 56,
-      child: Center(
-        child: Material(
-          shape: const CircleBorder(),
-          clipBehavior: Clip.antiAlias,
-          elevation: 4,
-          child: InkWell(
-            onTap: _toggle,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Icon(
-                Icons.close,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-        ),
+    final theme = Theme.of(context);
+
+    return FloatingActionButton(
+      onPressed: _toggle,
+      backgroundColor: theme.colorScheme.onPrimary,
+      child: Icon(
+        Icons.close,
+        color: theme.primaryColor,
       ),
     );
   }
@@ -100,6 +89,7 @@ class _ExpandableFabState extends State<ExpandableFab>
     final children = <Widget>[];
     final count = widget.children.length;
     final step = 90.0 / (count - 1);
+
     for (var i = 0, angleInDegrees = 0.0;
         i < count;
         i++, angleInDegrees += step) {
@@ -121,14 +111,14 @@ class _ExpandableFabState extends State<ExpandableFab>
       child: AnimatedContainer(
         transformAlignment: Alignment.center,
         transform: Matrix4.diagonal3Values(
-          _open ? 0.7 : 1.0,
-          _open ? 0.7 : 1.0,
+          _open ? 0.7 : 1,
+          _open ? 0.7 : 1,
           1,
         ),
         duration: const Duration(milliseconds: 250),
         curve: const Interval(0, 0.5, curve: Curves.easeOut),
         child: AnimatedOpacity(
-          opacity: _open ? 0.0 : 1.0,
+          opacity: _open ? 0 : 1,
           curve: const Interval(0.25, 1, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
@@ -184,11 +174,13 @@ class ActionButton extends StatelessWidget {
   const ActionButton({
     super.key,
     this.onPressed,
+    this.tooltip,
     required this.icon,
   });
 
   final VoidCallback? onPressed;
   final Widget icon;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +194,7 @@ class ActionButton extends StatelessWidget {
         onPressed: onPressed,
         icon: icon,
         color: theme.colorScheme.onSecondary,
+        tooltip: tooltip,
       ),
     );
   }

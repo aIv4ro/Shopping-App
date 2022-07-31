@@ -20,8 +20,7 @@ class ProductRepository {
       'description': description,
     });
 
-    final newDoc =
-        await firestore.collection(collectionName).doc(newDocRef.path).get();
+    final newDoc = await newDocRef.get();
 
     return Product.fromJson({'id': newDoc.id, ...?newDoc.data()});
   }

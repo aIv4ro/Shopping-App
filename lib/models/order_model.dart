@@ -1,4 +1,4 @@
-import 'package:shopping/models/product_model.dart';
+import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/user_model.dart';
 
 class Order {
@@ -8,7 +8,7 @@ class Order {
     final id = json['id'];
     final user = User.fromJson(json['user']);
     final products = (json['products'] as List<Map<String, dynamic>>)
-        .map(Product.fromJson)
+        .map(OrderProduct.fromJson)
         .toList();
 
     return Order(
@@ -22,11 +22,11 @@ class Order {
     return {
       'id': id,
       'user': user.id,
-      'products': products.map((product) => product.id).toList(),
+      'products': products.map((product) => product.toJson()).toList(),
     };
   }
 
   final String id;
   final User user;
-  final List<Product> products;
+  final List<OrderProduct> products;
 }

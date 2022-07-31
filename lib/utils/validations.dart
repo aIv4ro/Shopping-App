@@ -90,3 +90,14 @@ class EmailValidation extends Validation {
     return null;
   }
 }
+
+class ProductNameValidation extends Validation {
+  @override
+  String? validate(String? value) {
+    if(value == null || value.isEmpty) {
+      return "Product name can't be empty";
+    }
+
+    return null;
+  }
+}

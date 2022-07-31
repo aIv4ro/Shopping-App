@@ -73,6 +73,7 @@ final routes = <String, WidgetBuilder>{
       providers: [
         RepositoryProvider(create: (_) => ProductRepository()),
         RepositoryProvider(create: (_) => OrderRepository()),
+        RepositoryProvider(create: (_) => UserRepository()),
       ],
       child: BlocProvider(
         create: (blocProviderContext) => CreateOrderBloc(

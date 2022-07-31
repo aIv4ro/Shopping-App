@@ -6,3 +6,17 @@ abstract class CreateOrderEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+
+class CreateProductEvent extends CreateOrderEvent {
+  const CreateProductEvent({
+    required this.name,
+    this.description = '',
+  });
+
+  final String name;
+  final String description;
+
+  @override
+  List<Object> get props => [name, description];
+}
