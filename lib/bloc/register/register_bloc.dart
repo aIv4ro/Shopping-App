@@ -10,8 +10,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     required this.usersRepository,
     required this.authRepository,
   }) : super(
-    const RegisterState()
-  ) {
+          const RegisterState(),
+        ) {
     on<LoadEmails>(_onLoadEmails);
     on<CreateUser>(_onCreateUser);
   }
@@ -20,7 +20,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthRepository authRepository;
 
   Future<void> _onLoadEmails(
-    LoadEmails event, Emitter<RegisterState> emit
+    LoadEmails event,
+    Emitter<RegisterState> emit,
   ) async {
     emit(state.copyWith(status: () => RegisterStatus.loadingData));
     final emails = await usersRepository.loadAllEmails();
@@ -34,15 +35,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Future<void> _onCreateUser(
-    CreateUser event, Emitter<RegisterState> emit
+    CreateUser event,
+    Emitter<RegisterState> emit,
   ) async {
     emit(state.copyWith(status: () => RegisterStatus.creatingUser));
-      try{
-        await authRepository.registerUser(event.email, event.password);
-        await usersRepository.createUser(event.email, event.name, event.surname);
-        emit(state.copyWith(status: () => RegisterStatus.userRegistered));
-      }catch(err) {
-        emit(state.copyWith(status: () => RegisterStatus.registerError));
-      }
+    try {
+      await authRepository.registerUser(event.email, event.password);
+      await usersRepository.createUser(event.email, event.name, event.surname);
+      emit(state.copyWith(status: () => RegisterStatus.userRegistered));
+    } catch (err) {
+      emit(state.copyWith(status: () => RegisterStatus.registerError));
+    }
   }
 }

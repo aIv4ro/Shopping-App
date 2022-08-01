@@ -16,7 +16,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
 
   Future<void> _onAuthenticate(
-      Authenticate event, Emitter<LoginState> emit) async {
+    Authenticate event,
+    Emitter<LoginState> emit,
+  ) async {
     emit(state.copyWith(status: () => LoginStatus.authenticating));
 
     try {

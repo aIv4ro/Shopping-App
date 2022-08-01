@@ -6,7 +6,7 @@ import 'package:shopping/routes/paths.dart';
 import 'package:shopping/widgets/splash_screen.dart';
 
 class SplashPage extends StatelessWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +14,18 @@ class SplashPage extends StatelessWidget {
       navigateAfterFuture: () async {
         final authenticatedUser = AuthRepository.currentUser;
 
-        try{
+        try {
           final userRepository = context.read<UserRepository>();
-          final currentUser = await userRepository.findUserByEmail(authenticatedUser!.email!);
+          final currentUser =
+              await userRepository.findUserByEmail(authenticatedUser!.email!);
           UserRepository.currentUser = currentUser;
           return home;
-        }catch(err) {
+        } catch (err) {
           return login;
         }
       },
-      logo: Image.network('https://static-cdn.jtvnw.net/ttv-static-metadata/twitch_logo3.jpg'),
+      logo: Image.network(
+          'https://static-cdn.jtvnw.net/ttv-static-metadata/twitch_logo3.jpg'),
     );
   }
 }

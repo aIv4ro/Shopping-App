@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class PendingTab extends StatefulWidget {
-  const PendingTab({Key? key}) : super(key: key);
+  const PendingTab({super.key});
 
   @override
   State<StatefulWidget> createState() => PendingTabState();

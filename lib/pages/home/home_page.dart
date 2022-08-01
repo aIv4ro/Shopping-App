@@ -9,7 +9,7 @@ import 'package:shopping/pages/home/pending_tab.dart';
 import 'package:shopping/routes/paths.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<StatefulWidget> createState() => _HomePageState();

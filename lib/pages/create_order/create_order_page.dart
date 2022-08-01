@@ -334,12 +334,16 @@ class CreateOrderPageState extends State<CreateOrderPage> {
 
             if (validationResult != null && !validationResult) {
               ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Error, check fields')));
+                const SnackBar(content: Text('Error, check fields')),
+              );
             }
 
-            _bloc.add(CreateProductEvent(
+            _bloc.add(
+              CreateProductEvent(
                 name: nameController.text,
-                description: descriptionController.text));
+                description: descriptionController.text,
+              ),
+            );
           },
           child: const Text('Accept'),
         ),

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
-    Key? key, required this.navigateAfterFuture, this.showLoading = false,
-    required this.logo, this.logoSize = const Size(200, 200)
-  }) : super(key: key);
+    super.key,
+    required this.navigateAfterFuture,
+    this.showLoading = false,
+    required this.logo,
+    this.logoSize = const Size(200, 200),
+  });
 
   /// returns the path of the destination page
   final Future<String> Function() navigateAfterFuture;
@@ -28,20 +31,19 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: widget.logoSize.width,
-                height: widget.logoSize.height,
-                child: widget.logo,
-              ),
-              if(widget.showLoading)
-                const CircularProgressIndicator()
-            ],
-          ),
-        )
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: widget.logoSize.width,
+              height: widget.logoSize.height,
+              child: widget.logo,
+            ),
+            if (widget.showLoading) const CircularProgressIndicator()
+          ],
+        ),
+      ),
     );
   }
 }

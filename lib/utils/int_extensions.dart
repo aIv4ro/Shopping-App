@@ -4,8 +4,7 @@ extension IntExtensions on int {
   }
 
   bool get isLetter {
-    return (this >= 0x41 && this <= 0x5A) ||
-        (this >= 0x61 && this <= 0x7A);
+    return (this >= 0x41 && this <= 0x5A) || (this >= 0x61 && this <= 0x7A);
   }
 
   bool get isLowerCase {
@@ -16,4 +15,3 @@ extension IntExtensions on int {
     return this >= 0x41 && this <= 0x5A;
   }
 }
-

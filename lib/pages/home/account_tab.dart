@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class AccountTab extends StatefulWidget {
-  const AccountTab({Key? key}) : super(key: key);
+  const AccountTab({super.key});
 
   @override
   State<StatefulWidget> createState() => AccountTabState();

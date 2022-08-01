@@ -9,7 +9,7 @@ import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _RegisterPageState();
@@ -49,9 +49,11 @@ class _RegisterPageState extends State<RegisterPage> {
               );
           }
 
-          if(state.status == RegisterStatus.userRegistered) {
+          if (state.status == RegisterStatus.userRegistered) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('User registered'),),
+              const SnackBar(
+                content: Text('User registered'),
+              ),
             );
 
             Navigator.of(context).pushReplacementNamed(login);
@@ -74,33 +76,43 @@ class _RegisterPageState extends State<RegisterPage> {
                 footer: [
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: state.status == RegisterStatus.creatingUser ?
-                    const Center(child: CircularProgressIndicator(),) :
-                    ElevatedButton(
-                      onPressed: () {
-                        if(_formKey.currentState == null || !_formKey.currentState!.validate()){
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Error, check inputs',),)
-                          );
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: state.status == RegisterStatus.creatingUser
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState == null ||
+                                  !_formKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Error, check inputs',
+                                    ),
+                                  ),
+                                );
 
-                          return;
-                        }
+                                return;
+                              }
 
-                        bloc.add(
-                          CreateUser(
-                            email: emailController.text,
-                            name: nameController.text,
-                            surname: surnameController.text,
-                            password: passwordController.text
+                              bloc.add(
+                                CreateUser(
+                                  email: emailController.text,
+                                  name: nameController.text,
+                                  surname: surnameController.text,
+                                  password: passwordController.text,
+                                ),
+                              );
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 20,
+                              ),
+                              child: Text('REGISTER'),
+                            ),
                           ),
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20,),
-                        child: Text('REGISTER'),
-                      ),
-                    ),
                   )
                 ],
                 children: [
@@ -127,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if(value == null || value.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Field can't be empty";
                         }
 
@@ -148,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if(value == null || value.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return "Field can't be empty";
                         }
 
@@ -170,7 +182,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: passwordController,
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.password),
-                    padding: const EdgeInsets.symmetric(horizontal: 10,),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -178,8 +192,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   PasswordInput(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator:
-                    RepeatPasswordValidation(password: passwordController)
-                        .validate,
+                        RepeatPasswordValidation(password: passwordController)
+                            .validate,
                     labelText: 'Repeat Password',
                     prefixIcon: const Icon(Icons.password),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -191,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             );
           },
-        )
+        ),
       ),
     );
   }

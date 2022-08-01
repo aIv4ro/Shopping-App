@@ -26,9 +26,13 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   final OrderRepository orderRepository;
 
   Future<void> _createProductEvent(
-      CreateProductEvent event, Emitter<CreateOrderState> emit) async {
-    final newProduct =
-        await productRepository.createProduct(event.name, event.description);
+    CreateProductEvent event,
+    Emitter<CreateOrderState> emit,
+  ) async {
+    final newProduct = await productRepository.createProduct(
+      event.name,
+      event.description,
+    );
     final products = List.of(state.products)..add(newProduct);
 
     emit(
@@ -40,11 +44,14 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   }
 
   Future<void> _initialLoadEvent(
-      InitialLoadEvent event, Emitter<CreateOrderState> emit) async {
+    InitialLoadEvent event,
+    Emitter<CreateOrderState> emit,
+  ) async {
     emit(state.copyWith(status: () => CreateOrderStatus.initalLoad));
 
     final result = await Future.wait(
-        [userRepository.findAllUsers(), productRepository.findAllProducts()]);
+      [userRepository.findAllUsers(), productRepository.findAllProducts()],
+    );
 
     final users = result[0] as List<User>;
     final products = result[1] as List<Product>;
@@ -59,7 +66,9 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   }
 
   void _addOrderProductEvent(
-      AddOrderProductEvent event, Emitter<CreateOrderState> emit) {
+    AddOrderProductEvent event,
+    Emitter<CreateOrderState> emit,
+  ) {
     final products = List.of(state.products)..remove(event.product);
     final newOrderProduct = OrderProduct(product: event.product, quantity: 1);
     final orderProducts = List.of(state.orderProducts)..add(newOrderProduct);
@@ -73,7 +82,9 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   }
 
   void _removeOrderProductEvent(
-      RemoveOrderProductEvent event, Emitter<CreateOrderState> emit) {
+    RemoveOrderProductEvent event,
+    Emitter<CreateOrderState> emit,
+  ) {
     final orderProducts = List.of(state.orderProducts)
       ..remove(event.orderProduct);
     final products = List.of(state.products)..add(event.orderProduct.product);

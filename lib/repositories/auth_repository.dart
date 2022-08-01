@@ -6,13 +6,16 @@ class AuthRepository {
 
   Future<void> login(String email, String password) async {
     await firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password,
+      email: email,
+      password: password,
     );
   }
 
   Future<void> registerUser(String email, String password) async {
     await firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
   }
 
   Future<void> logout() async {

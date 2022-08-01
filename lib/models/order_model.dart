@@ -2,19 +2,21 @@ import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/user_model.dart';
 
 class Order {
-  const Order({required this.id, required this.user, required this.products});
+  const Order({
+    required this.id,
+    required this.user,
+    required this.orderProducts,
+  });
 
   factory Order.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as String;
-    final user = User.fromJson(json['user'] as Map<String, dynamic>);
-    final products = (json['products'] as List<Map<String, dynamic>>)
-        .map(OrderProduct.fromJson)
-        .toList();
+    final userJson = json['user'] as Map<String, dynamic>;
+    final orderProductsJson = json['products'] as List<Map<String, dynamic>>;
 
     return Order(
       id: id,
-      user: user,
-      products: products,
+      user: User.fromJson(userJson),
+      orderProducts: orderProductsJson.map(OrderProduct.fromJson).toList(),
     );
   }
 
@@ -22,11 +24,12 @@ class Order {
     return {
       'id': id,
       'user': user.id,
-      'products': products.map((product) => product.toJson()).toList(),
+      'products':
+          orderProducts.map((orderProduct) => orderProduct.toJson()).toList(),
     };
   }
 
   final String id;
   final User user;
-  final List<OrderProduct> products;
+  final List<OrderProduct> orderProducts;
 }

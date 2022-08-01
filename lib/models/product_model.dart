@@ -1,5 +1,9 @@
 class Product {
-  const Product({required this.id, required this.name, this.description});
+  const Product({
+    required this.id,
+    required this.name,
+    this.description,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as String;

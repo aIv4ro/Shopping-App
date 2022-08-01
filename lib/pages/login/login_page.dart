@@ -10,7 +10,7 @@ import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
@@ -68,9 +68,12 @@ class _LoginPageState extends State<LoginPage> {
 
                       return ElevatedButton(
                         onPressed: () {
-                          context.read<LoginBloc>().add(Authenticate(
-                              email: emailController.text,
-                              password: passwordController.text));
+                          context.read<LoginBloc>().add(
+                                Authenticate(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                ),
+                              );
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(10),

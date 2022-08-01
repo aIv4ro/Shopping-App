@@ -3,8 +3,9 @@ import 'package:shopping/utils/validations.dart';
 
 class EmailInput extends StatelessWidget {
   const EmailInput({
-    Key? key, required this.emailValidation
-  }) : super(key: key);
+    super.key,
+    required this.emailValidation,
+  });
 
   final EmailValidation emailValidation;
 

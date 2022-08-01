@@ -10,20 +10,20 @@ class PasswordValidation extends Validation {
   const PasswordValidation();
 
   @override
-  String? validate(value) {
-    if(value == null || value.isEmpty){
+  String? validate(String? value) {
+    if (value == null || value.isEmpty) {
       return "Field can't be empty";
     }
 
-    if(value.length < 6){
+    if (value.length < 6) {
       return 'Min length is 6!';
     }
 
-    if(!value.codeUnits.any((element) => element.isDigit)){
+    if (!value.codeUnits.any((element) => element.isDigit)) {
       return 'Password must contain 1 digit';
     }
 
-    if(!value.codeUnits.any((element) => element.isLetter)){
+    if (!value.codeUnits.any((element) => element.isLetter)) {
       return 'Password must contain 1 letter';
     }
 
@@ -36,8 +36,8 @@ class RepeatPasswordValidation extends Validation {
   final TextEditingController password;
 
   @override
-  String? validate(value) {
-    if(value != password.text){
+  String? validate(String? value) {
+    if (value != password.text) {
       return 'Passwords must be equal';
     }
 
@@ -46,21 +46,21 @@ class RepeatPasswordValidation extends Validation {
 }
 
 class UsernameValidation extends Validation {
-  const UsernameValidation({ this.usernames = const [] });
+  const UsernameValidation({this.usernames = const []});
 
   final List<String> usernames;
 
   @override
-  String? validate(value) {
-    if(value == null || value.isEmpty){
+  String? validate(String? value) {
+    if (value == null || value.isEmpty) {
       return "Field can't be empty";
     }
 
-    if(value.length < 5){
+    if (value.length < 5) {
       return 'Min length is 5!';
     }
 
-    if(usernames.contains(value)){
+    if (usernames.contains(value)) {
       return 'Username already in use';
     }
 
@@ -69,21 +69,22 @@ class UsernameValidation extends Validation {
 }
 
 class EmailValidation extends Validation {
-  const EmailValidation({ this.emails = const [] });
+  const EmailValidation({this.emails = const []});
   final List<String> emails;
-  static final emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  static final emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   @override
-  String? validate(value) {
-    if(value == null || value.isEmpty){
+  String? validate(String? value) {
+    if (value == null || value.isEmpty) {
       return "Field can't be empty";
     }
 
-    if(!emailRegex.hasMatch(value)){
+    if (!emailRegex.hasMatch(value)) {
       return 'Email format error: example@example.com';
     }
 
-    if(emails.contains(value)){
+    if (emails.contains(value)) {
       return 'Email already in use';
     }
 
@@ -94,7 +95,7 @@ class EmailValidation extends Validation {
 class ProductNameValidation extends Validation {
   @override
   String? validate(String? value) {
-    if(value == null || value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "Product name can't be empty";
     }
 

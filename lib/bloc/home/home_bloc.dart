@@ -18,7 +18,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserRepository userRepository;
 
   Future<void> _closeSession(
-      CloseSession event, Emitter<HomeState> emit) async {
+    CloseSession event,
+    Emitter<HomeState> emit,
+  ) async {
     emit(
       state.copyWith(
         status: () => HomeStatus.loggingOut,

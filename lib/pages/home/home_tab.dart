@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({Key? key}) : super(key: key);
+  const HomeTab({super.key});
 
   @override
   State<StatefulWidget> createState() => HomeTabState();

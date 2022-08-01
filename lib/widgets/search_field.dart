@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SearchField<T> extends StatefulWidget {
   const SearchField({
-    Key? key,
+    super.key,
     this.items = const [],
     this.labelText,
     this.padding = EdgeInsets.zero,
@@ -13,7 +13,7 @@ class SearchField<T> extends StatefulWidget {
     required this.buildItem,
     required this.itemSelectedString,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final List<T> items;
   final String? labelText;

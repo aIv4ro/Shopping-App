@@ -13,8 +13,10 @@ class LoadEmails extends RegisterEvent {
 
 class CreateUser extends RegisterEvent {
   const CreateUser({
-    required this.email, required this.password,
-    required this.name, required this.surname,
+    required this.email,
+    required this.password,
+    required this.name,
+    required this.surname,
   });
 
   final String email;

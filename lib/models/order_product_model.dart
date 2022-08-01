@@ -1,14 +1,17 @@
 import 'package:shopping/models/product_model.dart';
 
 class OrderProduct {
-  const OrderProduct({required this.product, required this.quantity});
+  const OrderProduct({
+    required this.product,
+    required this.quantity,
+  });
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
-    final product = Product.fromJson(json['product'] as Map<String, dynamic>);
+    final productJson = json['product'] as Map<String, dynamic>;
     final quantity = json['quantity'] as double;
 
     return OrderProduct(
-      product: product,
+      product: Product.fromJson(productJson),
       quantity: quantity,
     );
   }
