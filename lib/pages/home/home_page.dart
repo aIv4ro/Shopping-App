@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     AccountTab(),
   ];
 
-  void _onItemTapped(index) => setState(() => _selectedIndex = index);
+  void _onItemTapped(int index) => setState(() => _selectedIndex = index);
 
   @override
   Widget build(BuildContext context) {

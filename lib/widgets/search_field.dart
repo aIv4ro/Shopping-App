@@ -33,7 +33,7 @@ class SearchField<T> extends StatefulWidget {
 class SearchFieldState<T> extends State<SearchField<T>> {
   List<T> suggestions = [];
 
-  void onChanged(value) {
+  void onChanged(String value) {
     final newSuggestions = widget.items.where((item) {
       return widget.match(item, value);
     }).toList();

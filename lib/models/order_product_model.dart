@@ -4,7 +4,7 @@ class OrderProduct {
   const OrderProduct({required this.product, required this.quantity});
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
-    final product = Product.fromJson(json['product']);
+    final product = Product.fromJson(json['product'] as Map<String, dynamic>);
     final quantity = json['quantity'] as double;
 
     return OrderProduct(

@@ -10,7 +10,7 @@ class OrderRepository {
   Future<List<Order>> findAllOrders() async {
     final querySnapshot = await firestore.collection(collectionPath).get();
     final orders = querySnapshot.docs.map((doc) async {
-      final orderId = doc.id, userRef = doc.data()['user'];
+      final orderId = doc.id, userRef = doc.data()['user'] as String;
       final productsRef = doc.data()['products'] as List;
 
       final userDoc = await firestore
@@ -23,7 +23,7 @@ class OrderRepository {
         ...?userDoc.data(),
       };
 
-      Future<Map> findProductById(productRef) async {
+      Future<Map> findProductById(String productRef) async {
         final productDoc = await firestore
             .collection(ProductRepository.collectionName)
             .doc(productRef)
@@ -33,11 +33,15 @@ class OrderRepository {
       }
 
       final products = [
-        for (final productRef in productsRef) await findProductById(productRef)
+        for (final productRef in productsRef)
+          await findProductById(productRef as String)
       ];
 
-      return Order.fromJson(
-          {'id': orderId, 'user': user, 'products': products});
+      return Order.fromJson({
+        'id': orderId,
+        'user': user,
+        'products': products,
+      });
     });
 
     return [];

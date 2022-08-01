@@ -5,8 +5,8 @@ class Order {
   const Order({required this.id, required this.user, required this.products});
 
   factory Order.fromJson(Map<String, dynamic> json) {
-    final id = json['id'];
-    final user = User.fromJson(json['user']);
+    final id = json['id'] as String;
+    final user = User.fromJson(json['user'] as Map<String, dynamic>);
     final products = (json['products'] as List<Map<String, dynamic>>)
         .map(OrderProduct.fromJson)
         .toList();

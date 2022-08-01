@@ -14,16 +14,18 @@ void main() async {
 }
 
 class Shopping extends StatelessWidget {
-  const Shopping({Key? key}) : super(key: key);
+  const Shopping({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shopping',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
-          inputDecorationTheme:
-              const InputDecorationTheme(border: OutlineInputBorder())),
+        primarySwatch: Colors.blue,
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+        ),
+      ),
       routes: routes,
       initialRoute: splash,
       debugShowCheckedModeBanner: false,
