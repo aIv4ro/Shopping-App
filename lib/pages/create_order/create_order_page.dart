@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +10,10 @@ import 'package:shopping/bloc/create_order/create_order_state.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/product_model.dart';
 import 'package:shopping/models/user_model.dart';
+import 'package:shopping/pages/create_order/widgets/product_item.dart';
 import 'package:shopping/utils/validations.dart';
 import 'package:shopping/widgets/expandable_fab.dart';
+import 'package:shopping/pages/create_order/widgets/order_product_item.dart';
 import 'package:shopping/widgets/search_field.dart';
 
 const users = [
@@ -83,6 +87,22 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     );
   }
 
+  Future<void> _showDateTimePicker() async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+
+    if (pickedDate != null) {
+      final formatter = DateFormat.yMMMMEEEEd();
+      final dateFormatted = formatter.format(pickedDate);
+
+      dateController.text = dateFormatted;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackdropScaffold(
@@ -98,9 +118,12 @@ class CreateOrderPageState extends State<CreateOrderPage> {
           )
         ],
       ),
-      subHeader: const Padding(
-        padding: EdgeInsets.all(10),
-        child: Text('Products'),
+      subHeader: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text(
+          'Products',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       floatingActionButton: ExpandableFab(
         distance: 100,
@@ -117,150 +140,96 @@ class CreateOrderPageState extends State<CreateOrderPage> {
           ),
         ],
       ),
-      backLayer: BlocListener<CreateOrderBloc, CreateOrderState>(
-        listener: (context, state) {
-          if (state.status == CreateOrderStatus.productCreated) {
-            Navigator.of(context).pop();
-          }
-        },
-        child: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                BlocBuilder<CreateOrderBloc, CreateOrderState>(
-                  buildWhen: (previous, current) {
-                    return previous.users != current.users;
-                  },
-                  builder: (context, state) {
-                    return SearchField<User>(
-                      items: state.users,
-                      labelText: 'Send to...',
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      match: (item, input) => item.fullName
-                          .toLowerCase()
-                          .contains(input.toLowerCase()),
-                      buildItem: (item) {
-                        return Container(
-                          padding: const EdgeInsets.all(20),
-                          width: double.infinity,
-                          child: Text(item.fullName),
-                        );
-                      },
-                      onItemSelected: (item) => itemSelected = item,
-                      controller: userController,
-                      itemSelectedString: (item) => item.fullName,
-                    );
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Date',
-                      prefixIcon: Icon(Icons.calendar_today),
-                    ),
-                    controller: dateController,
-                    readOnly: true,
-                    onTap: () async {
-                      final pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(const Duration(days: 365)),
-                      );
-
-                      if (pickedDate != null) {
-                        final formatter = DateFormat.yMMMMEEEEd();
-                        final dateFormatted = formatter.format(pickedDate);
-
-                        dateController.text = dateFormatted;
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                BlocBuilder<CreateOrderBloc, CreateOrderState>(
-                  buildWhen: (previous, current) {
-                    return previous.orderProducts != current.orderProducts;
-                  },
-                  builder: (context, state) {
-                    if (state.status == CreateOrderStatus.initalLoad) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Added products'),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ...state.orderProducts.map(_buildAddedProduct).toList(),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      frontLayer: BlocBuilder<CreateOrderBloc, CreateOrderState>(
-        buildWhen: (previous, current) {
-          return previous.products != current.products;
-        },
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: state.products.map(_buildNotAddedProduct).toList(),
-            ),
-          );
-        },
-      ),
+      backLayer: _buildBackLayer(),
+      frontLayer: _buildFrontLayer(),
     );
   }
 
-  Widget _buildAddedProduct(OrderProduct orderProduct) {
-    final product = orderProduct.product;
-
-    return Dismissible(
-      key: Key(product.id),
-      onDismissed: (direction) {
-        if (direction == DismissDirection.endToStart) {
-          _bloc.add(RemoveOrderProductEvent(orderProduct: orderProduct));
+  Widget _buildBackLayer() {
+    return BlocListener<CreateOrderBloc, CreateOrderState>(
+      listener: (context, state) {
+        if (state.status == CreateOrderStatus.productCreated) {
+          Navigator.of(context).pop();
         }
       },
-      child: Card(
-        elevation: 20,
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: ListTile(
-          title: Text(product.name),
-          subtitle: Text(
-            product.description ?? 'No description',
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
+      child: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                icon: const Icon(Icons.remove),
-                onPressed: () {},
+              const SizedBox(
+                height: 10,
               ),
-              Text('${orderProduct.quantity}'),
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              )
+              BlocBuilder<CreateOrderBloc, CreateOrderState>(
+                buildWhen: (previous, current) {
+                  return previous.users != current.users;
+                },
+                builder: (context, state) {
+                  return SearchField<User>(
+                    items: state.users,
+                    labelText: 'Send to...',
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    match: (item, input) => item.fullName
+                        .toLowerCase()
+                        .contains(input.toLowerCase()),
+                    buildItem: (item) {
+                      return Container(
+                        padding: const EdgeInsets.all(20),
+                        width: double.infinity,
+                        child: Text(item.fullName),
+                      );
+                    },
+                    onItemSelected: (item) => itemSelected = item,
+                    controller: userController,
+                    itemSelectedString: (item) => item.fullName,
+                  );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Date',
+                    prefixIcon: Icon(Icons.calendar_today),
+                  ),
+                  controller: dateController,
+                  readOnly: true,
+                  onTap: _showDateTimePicker,
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              BlocBuilder<CreateOrderBloc, CreateOrderState>(
+                buildWhen: (previous, current) {
+                  return previous.orderProducts != current.orderProducts;
+                },
+                builder: (context, state) {
+                  if (state.status == CreateOrderStatus.initalLoad) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          'Added products',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ...state.orderProducts.map(OrderProductItem.new).toList(),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -268,20 +237,18 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     );
   }
 
-  Widget _buildNotAddedProduct(Product product) {
-    return Card(
-      elevation: 20,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: ListTile(
-        title: Text(product.name),
-        subtitle: Text(product.description ?? 'No description'),
-        trailing: TextButton(
-          onPressed: () => _bloc.add(
-            AddOrderProductEvent(product: product),
+  Widget _buildFrontLayer() {
+    return BlocBuilder<CreateOrderBloc, CreateOrderState>(
+      buildWhen: (previous, current) {
+        return previous.products != current.products;
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Column(
+            children: state.products.map(ProductItem.new).toList(),
           ),
-          child: const Text('Add'),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -323,9 +290,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
         TextButton(

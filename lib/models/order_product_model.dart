@@ -1,7 +1,7 @@
 import 'package:shopping/models/product_model.dart';
 
 class OrderProduct {
-  const OrderProduct({
+  OrderProduct({
     required this.product,
     required this.quantity,
   });
@@ -24,5 +24,5 @@ class OrderProduct {
   }
 
   final Product product;
-  final double quantity;
+  double quantity;
 }

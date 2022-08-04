@@ -50,3 +50,14 @@ class RemoveOrderProductEvent extends CreateOrderEvent {
   @override
   List<Object> get props => [orderProduct];
 }
+
+class IncreseOrderProductQuantityEvent extends CreateOrderEvent {
+  const IncreseOrderProductQuantityEvent({
+    required this.orderProduct,
+  });
+
+  final OrderProduct orderProduct;
+
+  @override
+  List<Object> get props => [orderProduct];
+}

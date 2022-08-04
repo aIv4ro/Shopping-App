@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/bloc/create_order/create_order_event.dart';
 import 'package:shopping/bloc/create_order/create_order_state.dart';
@@ -19,6 +20,7 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     on<InitialLoadEvent>(_initialLoadEvent);
     on<AddOrderProductEvent>(_addOrderProductEvent);
     on<RemoveOrderProductEvent>(_removeOrderProductEvent);
+    on<IncreseOrderProductQuantityEvent>(_increaseOrderProdductQuantity);
   }
 
   final UserRepository userRepository;
@@ -92,6 +94,31 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     emit(
       state.copyWith(
         products: () => products,
+        orderProducts: () => orderProducts,
+      ),
+    );
+  }
+
+  void _increaseOrderProdductQuantity(
+    IncreseOrderProductQuantityEvent event,
+    Emitter<CreateOrderState> emit,
+  ) {
+    event.orderProduct.quantity += 1;
+    final newOrderProduct = OrderProduct(
+      product: event.orderProduct.product,
+      quantity: event.orderProduct.quantity,
+    );
+
+    final oldOrderProductIndex = state.orderProducts.indexOf(
+      event.orderProduct,
+    );
+
+    final orderProducts = List.of(state.orderProducts)
+      ..removeAt(oldOrderProductIndex)
+      ..insert(oldOrderProductIndex, newOrderProduct);
+
+    emit(
+      state.copyWith(
         orderProducts: () => orderProducts,
       ),
     );
