@@ -25,7 +25,8 @@ class SplashPage extends StatelessWidget {
         }
       },
       logo: Image.network(
-          'https://static-cdn.jtvnw.net/ttv-static-metadata/twitch_logo3.jpg'),
+        'https://static-cdn.jtvnw.net/ttv-static-metadata/twitch_logo3.jpg',
+      ),
     );
   }
 }

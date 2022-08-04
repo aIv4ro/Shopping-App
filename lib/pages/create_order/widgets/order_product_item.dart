@@ -32,11 +32,12 @@ class _OrderProductItemState extends State<OrderProductItem> {
     return Dismissible(
       key: Key(widget.orderProduct.product.id),
       onDismissed: (direction) {
-        if (direction == DismissDirection.endToStart) {
-          _bloc.add(
-            RemoveOrderProductEvent(orderProduct: widget.orderProduct),
-          );
-        }
+        _bloc.add(
+          RemoveOrderProductEvent(orderProduct: widget.orderProduct),
+        );
+      },
+      confirmDismiss: (direction) async {
+        return direction == DismissDirection.endToStart;
       },
       child: Card(
         elevation: 20,

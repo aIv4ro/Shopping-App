@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,49 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:shopping/bloc/create_order/create_order_bloc.dart';
 import 'package:shopping/bloc/create_order/create_order_event.dart';
 import 'package:shopping/bloc/create_order/create_order_state.dart';
-import 'package:shopping/models/order_product_model.dart';
-import 'package:shopping/models/product_model.dart';
 import 'package:shopping/models/user_model.dart';
+import 'package:shopping/pages/create_order/widgets/order_product_item.dart';
 import 'package:shopping/pages/create_order/widgets/product_item.dart';
 import 'package:shopping/utils/validations.dart';
 import 'package:shopping/widgets/expandable_fab.dart';
-import 'package:shopping/pages/create_order/widgets/order_product_item.dart';
 import 'package:shopping/widgets/search_field.dart';
-
-const users = [
-  'Alvaro',
-  'Rodrigo',
-  'Andres',
-  'Carlos',
-  'Sergio',
-  'Pepe',
-  'Maximiliano',
-  'Jose',
-  'Alvaro',
-  'Rodrigo',
-  'Andres',
-  'Carlos',
-  'Sergio',
-  'Pepe',
-  'Maximiliano',
-  'Jose',
-  'Alvaro',
-  'Rodrigo',
-  'Andres',
-  'Carlos',
-  'Sergio',
-  'Pepe',
-  'Maximiliano',
-  'Jose',
-  'Alvaro',
-  'Rodrigo',
-  'Andres',
-  'Carlos',
-  'Sergio',
-  'Pepe',
-  'Maximiliano',
-  'Jose'
-];
 
 class CreateOrderPage extends StatefulWidget {
   const CreateOrderPage({super.key});
