@@ -25,6 +25,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
   final userController = TextEditingController();
   late final CreateOrderBloc _bloc;
   User? itemSelected;
+  DateTime? dateSelected;
 
   @override
   void initState() {
@@ -48,6 +49,19 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     );
   }
 
+  void _handleCreateOrderPressed() {
+    if (formKey.currentState == null || !formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error, Check inputs'),
+        ),
+      );
+      return;
+    }
+
+    _bloc.add(CreateOrder(toUser: itemSelected!));
+  }
+
   Future<void> _showDateTimePicker() async {
     final pickedDate = await showDatePicker(
       context: context,
@@ -57,6 +71,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     );
 
     if (pickedDate != null) {
+      dateSelected = pickedDate;
       final formatter = DateFormat.yMMMMEEEEd();
       final dateFormatted = formatter.format(pickedDate);
 
@@ -96,7 +111,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
           ),
           ActionButton(
             icon: const Icon(Icons.check),
-            onPressed: () {},
+            onPressed: _handleCreateOrderPressed,
             tooltip: 'Create order',
           ),
         ],
@@ -109,7 +124,8 @@ class CreateOrderPageState extends State<CreateOrderPage> {
   Widget _buildBackLayer() {
     return BlocListener<CreateOrderBloc, CreateOrderState>(
       listener: (context, state) {
-        if (state.status == CreateOrderStatus.productCreated) {
+        if (state.status == CreateOrderStatus.productCreated ||
+            state.status == CreateOrderStatus.orderCreated) {
           Navigator.of(context).pop();
         }
       },
@@ -130,6 +146,13 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                   return SearchField<User>(
                     items: state.users,
                     labelText: 'Send to...',
+                    validator: (value) {
+                      if (itemSelected == null) {
+                        return 'You must select a user';
+                      }
+
+                      return null;
+                    },
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     match: (item, input) => item.fullName
                         .toLowerCase()
@@ -157,6 +180,13 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                   controller: dateController,
                   readOnly: true,
                   onTap: _showDateTimePicker,
+                  validator: (value) {
+                    if (dateSelected == null) {
+                      return 'You have to select a date';
+                    }
+
+                    return null;
+                  },
                 ),
               ),
               const SizedBox(

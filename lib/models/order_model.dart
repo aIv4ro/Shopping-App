@@ -1,9 +1,10 @@
+import 'package:shopping/models/entity.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/user_model.dart';
 
-class Order {
+class Order extends Entity {
   const Order({
-    required this.id,
+    required super.id,
     required this.fromUser,
     required this.toUser,
     required this.orderProducts,
@@ -25,7 +26,6 @@ class Order {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'fromUser': fromUser.id,
       'toUser': toUser.id,
       'products': orderProducts.map((orderProduct) {
@@ -34,7 +34,6 @@ class Order {
     };
   }
 
-  final String id;
   final User fromUser;
   final User toUser;
   final List<OrderProduct> orderProducts;

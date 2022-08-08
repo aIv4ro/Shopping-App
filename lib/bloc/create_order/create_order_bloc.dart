@@ -20,7 +20,7 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     on<InitialLoadEvent>(_initialLoadEvent);
     on<AddOrderProductEvent>(_addOrderProductEvent);
     on<RemoveOrderProductEvent>(_removeOrderProductEvent);
-    on<IncreseOrderProductQuantityEvent>(_increaseOrderProdductQuantity);
+    on<CreateOrder>(_createOrder);
   }
 
   final UserRepository userRepository;
@@ -31,9 +31,12 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     CreateProductEvent event,
     Emitter<CreateOrderState> emit,
   ) async {
-    final newProduct = await productRepository.createProduct(
-      event.name,
-      event.description,
+    final newProduct = await productRepository.create(
+      model: Product(
+        id: '',
+        name: event.name,
+        description: event.description,
+      ),
     );
     final products = List.of(state.products)..add(newProduct);
 
@@ -52,7 +55,7 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     emit(state.copyWith(status: () => CreateOrderStatus.initalLoad));
 
     final result = await Future.wait(
-      [userRepository.findAllUsers(), productRepository.findAllProducts()],
+      [userRepository.findAll(), productRepository.findAll()],
     );
 
     final users = result[0] as List<User>;
@@ -101,28 +104,18 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     );
   }
 
-  void _increaseOrderProdductQuantity(
-    IncreseOrderProductQuantityEvent event,
+  Future<void> _createOrder(
+    CreateOrder event,
     Emitter<CreateOrderState> emit,
-  ) {
-    event.orderProduct.quantity += 1;
-    final newOrderProduct = OrderProduct(
-      product: event.orderProduct.product,
-      quantity: event.orderProduct.quantity,
+  ) async {
+    final toUser = event.toUser;
+
+    await orderRepository.createOrder(
+      fromUser: UserRepository.currentUser!,
+      toUser: toUser,
+      orderProducts: state.orderProducts,
     );
 
-    final oldOrderProductIndex = state.orderProducts.indexOf(
-      event.orderProduct,
-    );
-
-    final orderProducts = List.of(state.orderProducts)
-      ..removeAt(oldOrderProductIndex)
-      ..insert(oldOrderProductIndex, newOrderProduct);
-
-    emit(
-      state.copyWith(
-        orderProducts: () => orderProducts,
-      ),
-    );
+    emit(state.copyWith(status: () => CreateOrderStatus.orderCreated));
   }
 }

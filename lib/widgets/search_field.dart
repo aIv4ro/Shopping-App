@@ -13,6 +13,7 @@ class SearchField<T> extends StatefulWidget {
     required this.buildItem,
     required this.itemSelectedString,
     required this.controller,
+    this.validator,
   });
 
   final List<T> items;
@@ -25,6 +26,7 @@ class SearchField<T> extends StatefulWidget {
   final EdgeInsets padding;
   final double maxSuggestionsHeight;
   final TextEditingController controller;
+  final FormFieldValidator<String>? validator;
 
   @override
   State<StatefulWidget> createState() => SearchFieldState<T>();
@@ -56,6 +58,7 @@ class SearchFieldState<T> extends State<SearchField<T>> {
             ),
             controller: widget.controller,
             onChanged: onChanged,
+            validator: widget.validator,
           ),
           ConstrainedBox(
             constraints: BoxConstraints(

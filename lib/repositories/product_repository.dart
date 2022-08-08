@@ -1,27 +1,50 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping/models/product_model.dart';
+import 'package:shopping/repositories/repository.dart';
 
-class ProductRepository {
+class ProductRepository extends Respository<Product> {
   final firestore = FirebaseFirestore.instance;
-  static const collectionName = 'products';
+  static const path = 'products';
 
-  Future<List<Product>> findAllProducts() async {
-    final querySnapshot = await firestore.collection(collectionName).get();
-    final products = querySnapshot.docs
-        .map((doc) => Product.fromJson({'id': doc.id, ...doc.data()}))
-        .toList();
+  @override
+  Future<Product> create({required Product model}) async {
+    final docRef = await firestore.collection(path).add({...model.toJson()});
+    final doc = await docRef.get();
+
+    return Product.fromJson({'id': doc.id, ...?doc.data()});
+  }
+
+  @override
+  Future<List<Product>> findAll() async {
+    final querySnapshot = await firestore.collection(path).get();
+    final products = querySnapshot.docs.map((doc) {
+      return Product.fromJson({'id': doc.id, ...doc.data()});
+    }).toList();
 
     return products;
   }
 
-  Future<Product> createProduct(String name, String description) async {
-    final newDocRef = await firestore.collection(collectionName).add({
-      'name': name,
-      'description': description,
-    });
+  @override
+  Future<Product> findById({required String id}) async {
+    final doc = await firestore.collection(path).doc(id).get();
+    return Product.fromJson({'id': doc.id, ...?doc.data()});
+  }
 
-    final newDoc = await newDocRef.get();
+  @override
+  Future<Product> update({required Product model}) async {
+    await firestore.collection(path).doc(model.id).update(model.toJson());
+    return model;
+  }
 
-    return Product.fromJson({'id': newDoc.id, ...?newDoc.data()});
+  @override
+  Future<bool> delete({required String id}) {
+    return firestore
+        .collection(path)
+        .doc(id)
+        .delete()
+        .then((value) => true)
+        .catchError((err) => false);
   }
 }

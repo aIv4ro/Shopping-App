@@ -1,8 +1,9 @@
+import 'package:shopping/models/entity.dart';
 import 'package:shopping/utils/string_extensions.dart';
 
-class User {
+class User extends Entity {
   const User({
-    required this.id,
+    required super.id,
     required this.email,
     required this.name,
     required this.surname,
@@ -24,7 +25,6 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'email': email,
       'name': name,
       'surname': surname,
@@ -33,7 +33,6 @@ class User {
 
   static const empty = User(id: '', email: '', name: '', surname: '');
 
-  final String id;
   final String email;
   final String name;
   final String surname;

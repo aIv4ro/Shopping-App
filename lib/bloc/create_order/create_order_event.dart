@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/product_model.dart';
+import 'package:shopping/models/user_model.dart';
 
 abstract class CreateOrderEvent extends Equatable {
   const CreateOrderEvent();
@@ -51,13 +52,13 @@ class RemoveOrderProductEvent extends CreateOrderEvent {
   List<Object> get props => [orderProduct];
 }
 
-class IncreseOrderProductQuantityEvent extends CreateOrderEvent {
-  const IncreseOrderProductQuantityEvent({
-    required this.orderProduct,
+class CreateOrder extends CreateOrderEvent {
+  const CreateOrder({
+    required this.toUser,
   });
 
-  final OrderProduct orderProduct;
+  final User toUser;
 
   @override
-  List<Object> get props => [orderProduct];
+  List<Object> get props => [toUser];
 }

@@ -4,7 +4,12 @@ import 'package:shopping/models/product_model.dart';
 import 'package:shopping/models/user_model.dart';
 
 enum CreateOrderStatus {
-  initialStatus, initalLoad, initialLoadSuccess, creatingProduct, productCreated
+  initialStatus,
+  initalLoad,
+  initialLoadSuccess,
+  creatingProduct,
+  productCreated,
+  orderCreated
 }
 
 class CreateOrderState extends Equatable {
@@ -28,7 +33,8 @@ class CreateOrderState extends Equatable {
   }) {
     return CreateOrderState(
       status: status != null ? status() : this.status,
-      orderProducts: orderProducts != null ? orderProducts() : this.orderProducts,
+      orderProducts:
+          orderProducts != null ? orderProducts() : this.orderProducts,
       products: products != null ? products() : this.products,
       users: users != null ? users() : this.users,
     );

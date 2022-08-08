@@ -1,6 +1,8 @@
-class Product {
+import 'package:shopping/models/entity.dart';
+
+class Product extends Entity {
   const Product({
-    required this.id,
+    required super.id,
     required this.name,
     this.description,
   });
@@ -19,13 +21,11 @@ class Product {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'description': description,
     };
   }
 
-  final String id;
   final String name;
   final String? description;
 }
