@@ -4,6 +4,7 @@ import 'package:shopping/blocs/login/login_bloc.dart';
 import 'package:shopping/blocs/login/login_event.dart';
 import 'package:shopping/blocs/login/login_state.dart';
 import 'package:shopping/ui/pages/login/widgets/login_button.dart';
+import 'package:shopping/ui/paths.dart';
 import 'package:shopping/widgets/password_input.dart';
 
 class LoginPage extends StatefulWidget {
@@ -48,6 +49,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void _handleRegisterNowClick() => Navigator.of(context).pushNamed(register);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                   prefixIcon: const Icon(Icons.lock),
                 ),
                 Expanded(child: Container()),
-                LoginButton(onPressed: _handleLoginClick)
+                LoginButton(onPressed: _handleLoginClick),
+                TextButton(
+                  onPressed: _handleRegisterNowClick,
+                  child: const Text("Dont't have account? register now"),
+                )
               ],
             ),
           ),
