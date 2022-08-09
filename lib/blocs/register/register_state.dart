@@ -3,10 +3,11 @@ import 'package:equatable/equatable.dart';
 enum RegisterStatus {
   initialState,
   loadingData,
-  success,
-  creatingUser,
-  userRegistered,
-  registerError
+  dataLoadSucces,
+  dataLoadError,
+  registeringUser,
+  registerSuccess,
+  registerError,
 }
 
 class RegisterState extends Equatable {
