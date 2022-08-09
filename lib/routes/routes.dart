@@ -11,10 +11,10 @@ import 'package:shopping/pages/home/home_page.dart';
 import 'package:shopping/pages/login/login_page.dart';
 import 'package:shopping/pages/register/register_page.dart';
 import 'package:shopping/pages/splash/splash_page.dart';
-import 'package:shopping/repositories/auth_repository.dart';
-import 'package:shopping/repositories/order_repository.dart';
-import 'package:shopping/repositories/product_repository.dart';
-import 'package:shopping/repositories/user_repository.dart';
+import 'package:shopping/repositories/firebase/auth_repository.dart';
+import 'package:shopping/repositories/firebase/order_repository.dart';
+import 'package:shopping/repositories/firebase/product_repository.dart';
+import 'package:shopping/repositories/firebase/user_repository.dart';
 import 'package:shopping/routes/paths.dart';
 
 final routes = <String, WidgetBuilder>{
@@ -82,8 +82,8 @@ final routes = <String, WidgetBuilder>{
           productRepository: blocProviderContext.read(),
           orderRepository: blocProviderContext.read(),
         )..add(
-          const InitialLoadEvent(),
-        ),
+            const InitialLoadEvent(),
+          ),
         child: const CreateOrderPage(),
       ),
     );

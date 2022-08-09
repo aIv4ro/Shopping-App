@@ -1,14 +1,13 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping/models/order_model.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/user_model.dart';
-import 'package:shopping/repositories/product_repository.dart';
+import 'package:shopping/repositories/firebase/product_repository.dart';
 import 'package:shopping/repositories/repository.dart';
-import 'package:shopping/repositories/user_repository.dart';
+import 'package:shopping/repositories/firebase/user_repository.dart';
 
-class OrderRepository extends Respository<Order> {
+class OrderRepository extends ModelRepository<Order> {
   final firestore = FirebaseFirestore.instance;
   static const collectionPath = 'orders';
 

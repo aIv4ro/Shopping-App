@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping/models/user_model.dart';
 import 'package:shopping/repositories/repository.dart';
 
-class UserRepository extends Respository<User> {
+class UserRepository extends ModelRepository<User> {
   final firestore = FirebaseFirestore.instance;
   static const path = 'users';
   static User? currentUser;

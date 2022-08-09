@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping/models/product_model.dart';
 import 'package:shopping/repositories/repository.dart';
 
-class ProductRepository extends Respository<Product> {
+class ProductRepository extends ModelRepository<Product> {
   final firestore = FirebaseFirestore.instance;
   static const path = 'products';
 

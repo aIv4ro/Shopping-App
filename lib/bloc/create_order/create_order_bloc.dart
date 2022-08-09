@@ -5,10 +5,10 @@ import 'package:shopping/bloc/create_order/create_order_state.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/product_model.dart';
 import 'package:shopping/models/user_model.dart';
-import 'package:shopping/repositories/auth_repository.dart';
-import 'package:shopping/repositories/order_repository.dart';
-import 'package:shopping/repositories/product_repository.dart';
-import 'package:shopping/repositories/user_repository.dart';
+import 'package:shopping/repositories/firebase/auth_repository.dart';
+import 'package:shopping/repositories/firebase/order_repository.dart';
+import 'package:shopping/repositories/firebase/product_repository.dart';
+import 'package:shopping/repositories/firebase/user_repository.dart';
 
 class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   CreateOrderBloc({

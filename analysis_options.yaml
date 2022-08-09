@@ -16,9 +16,11 @@ analyzer:
 # can be found at https://dart-lang.github.io/linter/lints/options/options.html
 linter:
   rules:
+    sort_pub_dependencies: false
     avoid_classes_with_only_static_members: false
     sort_constructors_first: true
     prefer_single_quotes: true
     always_use_package_imports: true
+    
 
     
