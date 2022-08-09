@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping/bloc/register/register_bloc.dart';
-import 'package:shopping/bloc/register/register_event.dart';
-import 'package:shopping/bloc/register/register_state.dart';
-import 'package:shopping/routes/paths.dart';
+import 'package:shopping/blocs/register/register_bloc.dart';
+import 'package:shopping/blocs/register/register_event.dart';
+import 'package:shopping/blocs/register/register_state.dart';
+import 'package:shopping/ui/paths.dart';
 import 'package:shopping/utils/validations.dart';
 import 'package:shopping/widgets/list_with_footer.dart';
 import 'package:shopping/widgets/password_input.dart';

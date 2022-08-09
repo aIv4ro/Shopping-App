@@ -1,12 +1,19 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
+import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/entities/user_entity.dart';
 import 'package:shopping/domain/repositories/dio/dio_repository.dart';
 import 'package:shopping/domain/repositories/i_user_repository.dart';
 
-class DioUserRepository extends DioRepository implements IUserRepository {
-  DioUserRepository({required super.dioClient});
+class DioUserRepository extends IUserRepository implements DioRepository {
+  DioUserRepository({required this.dioClient});
 
-  static const _baseUrl = 'api/user';
+  @override
+  final DioClient dioClient;
+  Dio get dio => dioClient.dio;
+
+  @override
+  final basePath = 'login/';
 
   @override
   Future<User> create({required User model}) async {
@@ -28,7 +35,7 @@ class DioUserRepository extends DioRepository implements IUserRepository {
 
   @override
   Future<User> findById({required String id}) async {
-    final res = await dio.get('$_baseUrl/$id');
+    final res = await dio.get('$basePath/$id');
     final body = res.data as Map<String, dynamic>;
     return User.fromJson(json: body);
   }

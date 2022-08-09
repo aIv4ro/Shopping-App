@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping/bloc/register/register_event.dart';
-import 'package:shopping/bloc/register/register_state.dart';
+import 'package:shopping/blocs/register/register_event.dart';
+import 'package:shopping/blocs/register/register_state.dart';
 import 'package:shopping/models/user_model.dart';
 import 'package:shopping/repositories/firebase/auth_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';

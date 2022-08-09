@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping/bloc/create_order/create_order_bloc.dart';
-import 'package:shopping/bloc/create_order/create_order_event.dart';
+import 'package:shopping/blocs/create_order/create_order_bloc.dart';
+import 'package:shopping/blocs/create_order/create_order_event.dart';
 import 'package:shopping/models/product_model.dart';
 
 class ProductItem extends StatefulWidget {

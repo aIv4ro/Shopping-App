@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/repositories/firebase/auth_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
-import 'package:shopping/routes/paths.dart';
+import 'package:shopping/ui/paths.dart';
 import 'package:shopping/widgets/splash_screen.dart';
 
 class SplashPage extends StatelessWidget {

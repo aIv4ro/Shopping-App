@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping/bloc/home/home_bloc.dart';
-import 'package:shopping/bloc/home/home_event.dart';
-import 'package:shopping/bloc/home/home_state.dart';
+import 'package:shopping/blocs/home/home_bloc.dart';
+import 'package:shopping/blocs/home/home_event.dart';
+import 'package:shopping/blocs/home/home_state.dart';
 import 'package:shopping/pages/home/account_tab.dart';
 import 'package:shopping/pages/home/home_tab.dart';
 import 'package:shopping/pages/home/pending_tab.dart';
-import 'package:shopping/routes/paths.dart';
+import 'package:shopping/ui/paths.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

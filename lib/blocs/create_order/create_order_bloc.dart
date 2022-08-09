@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping/bloc/create_order/create_order_event.dart';
-import 'package:shopping/bloc/create_order/create_order_state.dart';
+import 'package:shopping/blocs/create_order/create_order_event.dart';
+import 'package:shopping/blocs/create_order/create_order_state.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/product_model.dart';
 import 'package:shopping/models/user_model.dart';

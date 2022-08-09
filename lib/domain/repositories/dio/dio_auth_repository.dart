@@ -1,13 +1,18 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/repositories/dio/dio_repository.dart';
-import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
 
-class DioAuthRepository extends DioRepository implements IAuthRepository {
-  DioAuthRepository({required super.dioClient});
+class DioAuthRepository extends IAuthRepository implements DioRepository {
+  DioAuthRepository({required this.dioClient});
 
-  static const _baseUrl = 'login/';
+  @override
+  final DioClient dioClient;
+  Dio get dio => dioClient.dio;
+
+  @override
+  final basePath = 'login/';
 
   @override
   Future<bool> login({
@@ -15,14 +20,14 @@ class DioAuthRepository extends DioRepository implements IAuthRepository {
     required String password,
   }) async {
     final res = await dio.post(
-      _baseUrl,
+      basePath,
       data: {'email': email, 'password': password},
     );
 
     final body = res.data as Map<String, dynamic>;
     final token = body['token'] as String?;
     if (token != null && token.isNotEmpty) {
-      client.setToken(token: token);
+      dioClient.setToken(token: token);
       return true;
     } else {
       return false;
@@ -31,6 +36,6 @@ class DioAuthRepository extends DioRepository implements IAuthRepository {
 
   @override
   void logout() {
-    client.unsetToken();
+    dioClient.unsetToken();
   }
 }
