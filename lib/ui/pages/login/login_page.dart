@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _fromKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   late final LoginBloc _bloc;
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLoginClick() {
-    final isFormValid = _fromKey.currentState?.validate();
+    final isFormValid = _formKey.currentState?.validate();
     if (isFormValid == null || !isFormValid) {
       _showSnackbarMessage(message: 'Form not valid, check the inputs');
       return;
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           }
         },
         child: Form(
-          key: _fromKey,
+          key: _formKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Column(

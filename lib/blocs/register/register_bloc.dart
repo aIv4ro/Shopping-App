@@ -9,7 +9,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     required this.authRepository,
   }) : super(const RegisterState()) {
     on<LoadEmails>(_onLoadEmails);
-    on<CreateUser>(_onCreateUser);
+    on<RegisterUser>(_onRegisterUser);
   }
 
   final IAuthRepository authRepository;
@@ -17,10 +17,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Future<void> _onLoadEmails(
     LoadEmails event,
     Emitter<RegisterState> emit,
-  ) async {}
+  ) async {
+    emit(state.copyWith(status: () => RegisterStatus.dataLoadSucces));
+  }
 
-  Future<void> _onCreateUser(
-    CreateUser event,
+  Future<void> _onRegisterUser(
+    RegisterUser event,
     Emitter<RegisterState> emit,
   ) async {}
 }

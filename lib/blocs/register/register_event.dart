@@ -11,8 +11,8 @@ class LoadEmails extends RegisterEvent {
   const LoadEmails();
 }
 
-class CreateUser extends RegisterEvent {
-  const CreateUser({
+class RegisterUser extends RegisterEvent {
+  const RegisterUser({
     required this.email,
     required this.password,
     required this.name,

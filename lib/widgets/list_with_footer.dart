@@ -14,17 +14,20 @@ class ListWithFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(delegate: SliverChildListDelegate(children)),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: footer,
+    return Padding(
+      padding: padding,
+      child: CustomScrollView(
+        slivers: [
+          SliverList(delegate: SliverChildListDelegate(children)),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: footer,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

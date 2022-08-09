@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
+import 'package:shopping/blocs/register/register_state.dart';
+import 'package:shopping/ui/pages/register/widgets/register_form.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,13 +12,12 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
-  late final RegisterBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = context.read();
+  void _showSnackbarMessage({required String message}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -25,12 +26,33 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         title: const Text('Register'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Expanded(child: Container()),
-          ],
+      body: BlocListener<RegisterBloc, RegisterState>(
+        listener: (context, state) {
+          if (state.status == RegisterStatus.registerError) {
+            _showSnackbarMessage(message: 'An error ocurred on register');
+            return;
+          }
+
+          if (state.status == RegisterStatus.registerSuccess) {
+            _showSnackbarMessage(message: 'User registered');
+            Navigator.of(context).pop();
+            return;
+          }
+        },
+        child: BlocBuilder<RegisterBloc, RegisterState>(
+          buildWhen: (previous, current) {
+            return current.status == RegisterStatus.loadingData ||
+                current.status == RegisterStatus.dataLoadSucces;
+          },
+          builder: (context, state) {
+            return state.status == RegisterStatus.loadingData
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RegisterForm(
+                    emails: state.emails,
+                  );
+          },
         ),
       ),
     );
