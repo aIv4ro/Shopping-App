@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
+import 'package:shopping/domain/entities/user_entity.dart';
 import 'package:shopping/domain/repositories/dio/dio_repository.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
 
@@ -13,7 +13,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   Dio get dio => dioClient.dio;
 
   @override
-  final basePath = 'login/';
+  final String? basePath = null;
 
   @override
   Future<bool> login({
@@ -21,7 +21,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
     required String password,
   }) async {
     final res = await dio.post(
-      basePath,
+      'login/',
       data: {'email': email, 'password': password},
     );
 
@@ -38,5 +38,13 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   @override
   void logout() {
     dioClient.unsetToken();
+  }
+
+  @override
+  Future<bool> register({required User user}) async {
+    return dio
+        .post('register/', data: user.toJson())
+        .then((value) => true)
+        .catchError((err) => false);
   }
 }

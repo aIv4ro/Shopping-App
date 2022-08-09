@@ -32,7 +32,7 @@ final routes = <String, WidgetBuilder>{
   register: (context) {
     return BlocProvider(
       create: (_) => RegisterBloc(
-        usersRepository: context.read<DioUserRepository>(),
+        authRepository: context.read<DioAuthRepository>(),
       )..add(const LoadEmails()),
       child: const RegisterPage(),
     );

@@ -2,17 +2,17 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/blocs/register/register_state.dart';
-import 'package:shopping/domain/repositories/i_user_repository.dart';
+import 'package:shopping/domain/repositories/i_auth_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({
-    required this.usersRepository,
+    required this.authRepository,
   }) : super(const RegisterState()) {
     on<LoadEmails>(_onLoadEmails);
     on<CreateUser>(_onCreateUser);
   }
 
-  final IUserRepository usersRepository;
+  final IAuthRepository authRepository;
 
   Future<void> _onLoadEmails(
     LoadEmails event,
