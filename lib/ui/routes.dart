@@ -16,7 +16,7 @@ import 'package:shopping/repositories/firebase/auth_repository.dart';
 import 'package:shopping/repositories/firebase/order_repository.dart';
 import 'package:shopping/repositories/firebase/product_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
-import 'package:shopping/ui/pages/login_page.dart';
+import 'package:shopping/ui/pages/login/login_page.dart';
 import 'package:shopping/ui/paths.dart';
 
 final routes = <String, WidgetBuilder>{

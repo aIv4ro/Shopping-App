@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/login/login_event.dart';
 import 'package:shopping/blocs/login/login_state.dart';
@@ -20,19 +21,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Authenticate event,
     Emitter<LoginState> emit,
   ) async {
-    emit(state.copyWith(status: () => LoginStatus.authenticating));
-
-    final loginSuccess = await authRepository.login(
-      email: event.email,
-      password: event.password,
-    );
-
     emit(
       state.copyWith(
-        status: () => loginSuccess
-            ? LoginStatus.authenticated
-            : LoginStatus.authenticationError,
+        status: () => LoginStatus.authenticating,
       ),
     );
+
+    try {
+      await authRepository.login(
+        email: event.email,
+        password: event.password,
+      );
+
+      emit(
+        state.copyWith(status: () => LoginStatus.authenticated),
+      );
+    } catch (err) {
+      emit(
+        state.copyWith(status: () => LoginStatus.authenticationError),
+      );
+    }
   }
 }

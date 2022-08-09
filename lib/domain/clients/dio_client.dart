@@ -10,7 +10,7 @@ class DioClient {
 
   static Dio _createDio() {
     final dio = Dio(
-      BaseOptions(baseUrl: 'http://localhost:8000/'),
+      BaseOptions(baseUrl: 'http://10.0.2.2:8000/'),
     );
 
     return dio;

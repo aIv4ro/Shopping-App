@@ -4,7 +4,7 @@ abstract class LoginEvent extends Equatable {
   const LoginEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class Authenticate extends LoginEvent {
@@ -17,5 +17,5 @@ class Authenticate extends LoginEvent {
   final String password;
 
   @override
-  List<Object> get props => [email, password];
+  List<Object?> get props => [email, password];
 }

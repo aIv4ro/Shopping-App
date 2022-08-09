@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/login/login_bloc.dart';
+import 'package:shopping/blocs/login/login_event.dart';
 import 'package:shopping/blocs/login/login_state.dart';
-import 'package:shopping/utils/validations.dart';
+import 'package:shopping/ui/pages/login/widgets/login_button.dart';
 import 'package:shopping/widgets/password_input.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,6 +39,13 @@ class _LoginPageState extends State<LoginPage> {
       _showSnackbarMessage(message: 'Form not valid, check the inputs');
       return;
     }
+
+    _bloc.add(
+      Authenticate(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ),
+    );
   }
 
   @override
@@ -47,7 +55,11 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text('Login'),
       ),
       body: BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state.status == LoginStatus.authenticationError) {
+            _showSnackbarMessage(message: 'Invalid user credentials');
+          }
+        },
         child: Form(
           key: _fromKey,
           child: Padding(
@@ -55,30 +67,21 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 TextFormField(
+                  controller: _emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     prefixIcon: Icon(Icons.email),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  validator: const EmailValidation().validate,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 10),
-                const PasswordInput(
+                PasswordInput(
+                  controller: _passwordController,
                   labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                 ),
                 Expanded(child: Container()),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _handleLoginClick,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Text('Login'),
-                    ),
-                  ),
-                ),
+                LoginButton(onPressed: _handleLoginClick)
               ],
             ),
           ),

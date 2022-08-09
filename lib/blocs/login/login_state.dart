@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 enum LoginStatus {
   notAuthenticated,
+  authenticated,
   authenticating,
   authenticationError,
-  authenticated,
 }
 
 class LoginState extends Equatable {
