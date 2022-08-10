@@ -43,8 +43,16 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   @override
   Future<bool> register({required User user}) async {
     return dio
-        .post('register/', data: user.toJson())
+        .post('register', data: user.toJson())
         .then((value) => true)
         .catchError((err) => false);
+  }
+
+  @override
+  FutureOr<List<String>> getAllEmails() async {
+    final res = await dio.get('register/getAllEmails');
+    final body = res.data as List;
+
+    return List.castFrom<dynamic, String>(body);
   }
 }
