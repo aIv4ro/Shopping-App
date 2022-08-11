@@ -7,6 +7,6 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CloseSession extends HomeEvent {
-  const CloseSession();
+class LogoutEvent extends HomeEvent {
+  const LogoutEvent();
 }

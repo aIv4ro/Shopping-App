@@ -6,7 +6,11 @@ import 'package:shopping/domain/repositories/dio/dio_repository.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
 
 class DioAuthRepository extends IAuthRepository implements DioRepository {
-  DioAuthRepository({required this.dioClient});
+  DioAuthRepository({required this.dioClient, String? lastSessionToken}) {
+    if (lastSessionToken != null) {
+      dioClient.setToken(token: lastSessionToken);
+    }
+  }
 
   @override
   final DioClient dioClient;
@@ -19,6 +23,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   Future<bool> login({
     required String email,
     required String password,
+    bool? keepLogged,
   }) async {
     final res = await dio.post(
       'login/',
@@ -54,5 +59,19 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
     final body = res.data as List;
 
     return List.castFrom<dynamic, String>(body);
+  }
+
+  @override
+  FutureOr<bool> tryAutoLogin({required String token}) async {
+    dioClient.setToken(token: token);
+    try {
+      final res = await dio.get('api/users/getUserById');
+      final user = User.fromJson(json: res.data as Map<String, dynamic>);
+      currentUser = user;
+    } catch (err) {
+      return false;
+    }
+
+    return true;
   }
 }

@@ -4,8 +4,8 @@ import 'package:shopping/models/order_model.dart';
 import 'package:shopping/models/order_product_model.dart';
 import 'package:shopping/models/user_model.dart';
 import 'package:shopping/repositories/firebase/product_repository.dart';
-import 'package:shopping/repositories/repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
+import 'package:shopping/repositories/repository.dart';
 
 class OrderRepository extends ModelRepository<Order> {
   final firestore = FirebaseFirestore.instance;

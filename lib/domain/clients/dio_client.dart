@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping/domain/clients/shared_preferences.dart';
 
 class DioClient {
   factory DioClient() => instance;
@@ -18,9 +20,11 @@ class DioClient {
 
   void setToken({required String token}) {
     dio.options.headers['Authorization'] = 'Bearer $token';
+    SharedPreferencesClient.setToken(token);
   }
 
   void unsetToken() {
     dio.options.headers['Authorization'] = '';
+    SharedPreferencesClient.unsetToken();
   }
 }

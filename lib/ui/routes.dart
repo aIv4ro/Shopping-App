@@ -9,12 +9,12 @@ import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
 import 'package:shopping/pages/create_order/create_order_page.dart';
-import 'package:shopping/pages/home/home_page.dart';
 import 'package:shopping/pages/splash/splash_page.dart';
 import 'package:shopping/repositories/firebase/auth_repository.dart';
 import 'package:shopping/repositories/firebase/order_repository.dart';
 import 'package:shopping/repositories/firebase/product_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
+import 'package:shopping/ui/pages/home/home_page.dart';
 import 'package:shopping/ui/pages/login/login_page.dart';
 import 'package:shopping/ui/pages/register/register_page.dart';
 import 'package:shopping/ui/paths.dart';
@@ -38,18 +38,12 @@ final routes = <String, WidgetBuilder>{
     );
   },
   home: (context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
-        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
-      ],
-      child: BlocProvider(
-        create: (blocProviderContext) => HomeBloc(
-          authRepository: blocProviderContext.read(),
-          userRepository: blocProviderContext.read(),
-        ),
-        child: const HomePage(),
+    return BlocProvider(
+      create: (_) => HomeBloc(
+        authRepository: context.read<DioAuthRepository>(),
+        userRepository: context.read<DioUserRepository>(),
       ),
+      child: const HomePage(),
     );
   },
   splash: (context) {

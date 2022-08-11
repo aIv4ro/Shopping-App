@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 
 abstract class DioRepository {

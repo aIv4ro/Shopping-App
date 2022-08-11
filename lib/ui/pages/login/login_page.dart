@@ -62,6 +62,10 @@ class _LoginPageState extends State<LoginPage> {
           if (state.status == LoginStatus.authenticationError) {
             _showSnackbarMessage(message: 'Invalid user credentials');
           }
+
+          if (state.status == LoginStatus.authenticated) {
+            Navigator.of(context).pushReplacementNamed(home);
+          }
         },
         child: Form(
           key: _formKey,

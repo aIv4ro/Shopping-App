@@ -1,6 +1,5 @@
-import 'package:shopping/models/user_model.dart';
 import 'dart:async';
-
+import 'package:shopping/models/user_model.dart';
 import 'package:shopping/repositories/repository.dart';
 
 class HttpAuthRepository extends AuthRepository {

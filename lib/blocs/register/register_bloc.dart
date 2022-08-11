@@ -5,7 +5,6 @@ import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/blocs/register/register_state.dart';
 import 'package:shopping/domain/entities/user_entity.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
-import 'package:shopping/utils/bcrypt_constants.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({

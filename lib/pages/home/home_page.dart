@@ -36,12 +36,12 @@ class _HomePageState extends State<HomePage> {
         actions: [
           BlocListener<HomeBloc, HomeState>(
             listener: (context, state) {
-              if (state.status == HomeStatus.loggedOut) {
+              if (state.status == HomeStatus.loggedout) {
                 Navigator.of(context).pushReplacementNamed(login);
               }
             },
             child: IconButton(
-              onPressed: () => bloc.add(const CloseSession()),
+              onPressed: () => bloc.add(const LogoutEvent()),
               icon: const Icon(Icons.logout),
             ),
           )
