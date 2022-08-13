@@ -13,24 +13,29 @@ class DioUserRepository extends IUserRepository implements DioRepository {
   Dio get dio => dioClient.dio;
 
   @override
-  final basePath = 'api/users';
+  final basePath = 'api/user';
 
   @override
   Future<User> create({required User model}) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    final res = await dio.post(basePath, data: {'user': model.toJson()});
+    final body = res.data as Map<String, dynamic>;
+    return User.fromJson(json: body);
   }
 
   @override
   FutureOr<bool> delete({required String id}) {
-    // TODO: implement delete
-    throw UnimplementedError();
+    return dio
+        .delete('$basePath/$id')
+        .then((value) => true)
+        .catchError((err) => false);
   }
 
   @override
   Future<List<User>> findAll() async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    final res = await dio.get(basePath);
+    final body = res.data as List;
+    final usersJson = List<Map<String, dynamic>>.from(body);
+    return usersJson.map((userJson) => User.fromJson(json: userJson)).toList();
   }
 
   @override
@@ -41,8 +46,9 @@ class DioUserRepository extends IUserRepository implements DioRepository {
   }
 
   @override
-  FutureOr<User> update({required User model}) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<User> update({required User model}) async {
+    final res = await dio.patch('$basePath/${model.id}');
+    final body = res.data as Map<String, dynamic>;
+    return User.fromJson(json: body);
   }
 }
