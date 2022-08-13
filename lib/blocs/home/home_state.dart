@@ -1,6 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-enum HomeStatus { initialStatus, logginout, loggedout }
+enum HomeStatus {
+  initialStatus,
+  logginout,
+  loggedout,
+  loadingCurrentUser,
+  currentUserLoaded,
+  currentUserLoadError,
+  creatingProduct,
+  productCreated,
+  productCreationError,
+}
 
 class HomeState extends Equatable {
   const HomeState({

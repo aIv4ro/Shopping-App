@@ -11,6 +11,7 @@ abstract class IAuthRepository {
     bool? keepLogged,
   });
   FutureOr<void> logout();
+  FutureOr<User> getUserFromToken();
   FutureOr<bool> tryAutoLogin({required String token});
 
   User? currentUser;

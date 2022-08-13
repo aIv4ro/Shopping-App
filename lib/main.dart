@@ -6,6 +6,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/clients/shared_preferences.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
+import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
 import 'package:shopping/ui/paths.dart';
 import 'package:shopping/ui/routes.dart';
@@ -13,55 +14,38 @@ import 'package:shopping/ui/routes.dart';
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await SharedPreferencesClient.init();
+  final token = SharedPreferencesClient.getToken();
 
-  runApp(const Shopping());
+  runApp(Shopping(
+    lastSessionToken: token,
+  ));
 }
 
 class Shopping extends StatelessWidget {
-  const Shopping({super.key});
+  const Shopping({super.key, this.lastSessionToken});
 
-  Future<Map<String, dynamic>> getToken() async {
-    await SharedPreferencesClient.init();
-
-    final token = SharedPreferencesClient.getToken();
-
-    return {
-      'token': token,
-      'isValid': token != null,
-    };
-  }
+  final String? lastSessionToken;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getToken(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Container();
-        }
+    FlutterNativeSplash.remove();
+    final isValid = lastSessionToken != null;
 
-        final data = snapshot.data! as Map<String, dynamic>;
-        final token = data['token'] as String?;
-        final isValid = data['isValid'] as bool;
-
-        FlutterNativeSplash.remove();
-
-        return _buildRepositoryProvider(
-          child: MaterialApp(
-            title: 'Shopping',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              inputDecorationTheme: const InputDecorationTheme(
-                border: OutlineInputBorder(),
-              ),
-            ),
-            routes: routes,
-            initialRoute: isValid ? home : login,
-            debugShowCheckedModeBanner: false,
+    return _buildRepositoryProvider(
+      child: MaterialApp(
+        title: 'Shopping',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          inputDecorationTheme: const InputDecorationTheme(
+            border: OutlineInputBorder(),
           ),
-          token: isValid ? token : null,
-        );
-      },
+        ),
+        routes: routes,
+        initialRoute: isValid ? home : login,
+        debugShowCheckedModeBanner: false,
+      ),
+      token: isValid ? lastSessionToken : null,
     );
   }
 
@@ -76,6 +60,9 @@ class Shopping extends StatelessWidget {
         ),
         RepositoryProvider<DioUserRepository>(
           create: (_) => DioUserRepository(dioClient: dioClient),
+        ),
+        RepositoryProvider<DioProductRepository>(
+          create: (_) => DioProductRepository(dioClient: dioClient),
         ),
       ],
       child: child,

@@ -7,10 +7,10 @@ import 'package:shopping/blocs/login/login_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
+import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
 import 'package:shopping/pages/create_order/create_order_page.dart';
 import 'package:shopping/pages/splash/splash_page.dart';
-import 'package:shopping/repositories/firebase/auth_repository.dart';
 import 'package:shopping/repositories/firebase/order_repository.dart';
 import 'package:shopping/repositories/firebase/product_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
@@ -42,6 +42,7 @@ final routes = <String, WidgetBuilder>{
       create: (_) => HomeBloc(
         authRepository: context.read<DioAuthRepository>(),
         userRepository: context.read<DioUserRepository>(),
+        productRepository: context.read<DioProductRepository>(),
       ),
       child: const HomePage(),
     );

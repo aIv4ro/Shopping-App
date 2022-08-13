@@ -37,7 +37,6 @@ class User extends Entity {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'email': email,
       'name': name,
       'surname': surname,

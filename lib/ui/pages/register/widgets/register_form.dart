@@ -31,6 +31,11 @@ class _RegisterFormState extends State<RegisterForm> {
     _bloc = context.read();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void _showSnackbarMessage({required String message}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

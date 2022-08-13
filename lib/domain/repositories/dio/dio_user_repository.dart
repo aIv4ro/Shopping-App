@@ -13,7 +13,7 @@ class DioUserRepository extends IUserRepository implements DioRepository {
   Dio get dio => dioClient.dio;
 
   @override
-  final basePath = 'login/';
+  final basePath = 'api/users';
 
   @override
   Future<User> create({required User model}) async {

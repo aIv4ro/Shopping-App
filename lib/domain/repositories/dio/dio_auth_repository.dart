@@ -17,7 +17,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   Dio get dio => dioClient.dio;
 
   @override
-  final String? basePath = null;
+  final String basePath = '';
 
   @override
   Future<bool> login({
@@ -58,7 +58,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
     final res = await dio.get('register/getAllEmails');
     final body = res.data as List;
 
-    return List.castFrom<dynamic, String>(body);
+    return List<String>.from(body);
   }
 
   @override
@@ -73,5 +73,12 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
     }
 
     return true;
+  }
+
+  @override
+  FutureOr<User> getUserFromToken() async {
+    final res = await dio.get('api/users/getUserFromToken');
+    final user = User.fromJson(json: res.data as Map<String, dynamic>);
+    return user;
   }
 }
