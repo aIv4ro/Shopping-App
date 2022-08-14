@@ -44,6 +44,21 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                child: Text('Drawer Header'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.inventory_2),
+                title: const Text('Products'),
+                onTap: () => Navigator.of(context).pushNamed(products),
+              ),
+            ],
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showDialog(

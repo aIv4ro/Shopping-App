@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/entities/product_entity.dart';
@@ -57,7 +58,14 @@ class DioProductRepository extends IProductRepository implements DioRepository {
 
   @override
   FutureOr<List<Product>> search({int offset = 0, int limit = 0}) async {
-    final res = await dio.patch('$basePath/search?offset=$offset&limit=$limit');
+    final res = await dio.get(
+      '$basePath/search',
+      queryParameters: {
+        'offset': offset,
+        'limit': limit,
+      },
+    );
+
     final productsJson = List<Map<String, dynamic>>.from(res.data as List);
 
     return productsJson.map((productJson) {

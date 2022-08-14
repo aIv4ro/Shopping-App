@@ -4,6 +4,8 @@ import 'package:shopping/blocs/create_order/create_order_bloc.dart';
 import 'package:shopping/blocs/create_order/create_order_event.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/login/login_bloc.dart';
+import 'package:shopping/blocs/products_bloc/products_bloc.dart';
+import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
@@ -16,6 +18,7 @@ import 'package:shopping/repositories/firebase/product_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
 import 'package:shopping/ui/pages/home/home_page.dart';
 import 'package:shopping/ui/pages/login/login_page.dart';
+import 'package:shopping/ui/pages/products/products_page.dart';
 import 'package:shopping/ui/pages/register/register_page.dart';
 import 'package:shopping/ui/paths.dart';
 
@@ -47,10 +50,12 @@ final routes = <String, WidgetBuilder>{
       child: const HomePage(),
     );
   },
-  splash: (context) {
-    return RepositoryProvider(
-      create: (_) => UserRepository(),
-      child: const SplashPage(),
+  products: (context) {
+    return BlocProvider(
+      create: (_) => ProductsBloc(
+        productRepository: context.read<DioProductRepository>(),
+      ),
+      child: const ProductsPage(),
     );
   },
   createOrder: (context) {
