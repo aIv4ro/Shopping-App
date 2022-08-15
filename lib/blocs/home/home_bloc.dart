@@ -60,8 +60,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       description: event.description,
     );
 
-    final createdProduct = await productRepository.create(model: product);
-    log('$createdProduct');
+    await productRepository.create(model: product);
 
     emit(state.copyWith(status: () => HomeStatus.productCreated));
   }

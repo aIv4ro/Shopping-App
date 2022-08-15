@@ -4,6 +4,7 @@ import 'package:shopping/blocs/products_bloc/products_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/domain/entities/product_entity.dart';
 import 'package:shopping/ui/pages/products/widgets/confirm_dialog.dart';
+import 'package:shopping/ui/pages/products/widgets/update_product_popup.dart';
 
 class ProductItem extends StatefulWidget {
   const ProductItem({super.key, required this.product});
@@ -19,8 +20,8 @@ class _ProductItemState extends State<ProductItem> {
 
   @override
   void initState() {
-    super.initState();
     _bloc = context.read();
+    super.initState();
   }
 
   Future<bool?> _confirmDismiss(DismissDirection direction) async {
@@ -52,7 +53,17 @@ class _ProductItemState extends State<ProductItem> {
                 widget.product.description!,
               ),
         trailing: IconButton(
-          onPressed: () async {},
+          onPressed: () async {
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return BlocProvider.value(
+                  value: _bloc,
+                  child: UpdateProductPopup(product: widget.product),
+                );
+              },
+            );
+          },
           icon: const Icon(Icons.edit),
         ),
       ),

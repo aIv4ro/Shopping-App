@@ -18,8 +18,8 @@ class _ProductPageState extends State<ProductsPage> {
 
   @override
   void initState() {
-    super.initState();
     _bloc = context.read();
+    super.initState();
   }
 
   void _showSnackbarMessage({required String message}) {
@@ -44,6 +44,16 @@ class _ProductPageState extends State<ProductsPage> {
 
           if (state.status == ProductsStatus.productDeletionError) {
             _showSnackbarMessage(message: 'Could not delete product');
+          }
+
+          if (state.status == ProductsStatus.productUpdated) {
+            Navigator.of(context).pop();
+            _showSnackbarMessage(message: 'Product updated');
+          }
+
+          if (state.status == ProductsStatus.productUpdateError) {
+            Navigator.of(context).pop();
+            _showSnackbarMessage(message: 'Could not update product');
           }
         },
         child: BlocBuilder<ProductsBloc, ProductsState>(

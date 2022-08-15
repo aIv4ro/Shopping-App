@@ -63,8 +63,8 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (context) => BlocProvider(
-                create: (context) => _bloc,
+              builder: (context) => BlocProvider.value(
+                value: _bloc,
                 child: const CreateProductPopup(),
               ),
             );

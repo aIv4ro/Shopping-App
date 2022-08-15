@@ -11,6 +11,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   }) : super(const ProductsState()) {
     on<LoadNextPageEvent>(_loadNextPage);
     on<DeleteProductEvent>(_deleteProduct);
+    on<UpdateProductEvent>(_updateProduct);
   }
 
   final IProductRepository productRepository;
@@ -53,6 +54,36 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       emit(state.copyWith(status: () => ProductsStatus.productDeleted));
     } else {
       emit(state.copyWith(status: () => ProductsStatus.productDeletionError));
+    }
+  }
+
+  FutureOr<void> _updateProduct(
+    UpdateProductEvent event,
+    Emitter<ProductsState> emit,
+  ) async {
+    emit(state.copyWith(status: () => ProductsStatus.updatingProduct));
+    try {
+      final productForUpdate = event.product;
+      log('$productForUpdate');
+      final updatedProduct = await productRepository.update(
+        model: productForUpdate,
+      );
+      final productIndex = state.products.indexWhere(
+        (element) => element.id == productForUpdate.id,
+      );
+
+      final products = List.of(state.products)
+        ..removeAt(productIndex)
+        ..insert(productIndex, updatedProduct);
+
+      emit(
+        state.copyWith(
+          status: () => ProductsStatus.productUpdated,
+          products: () => products,
+        ),
+      );
+    } catch (err) {
+      emit(state.copyWith(status: () => ProductsStatus.productUpdateError));
     }
   }
 }

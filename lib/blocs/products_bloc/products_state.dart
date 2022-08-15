@@ -7,7 +7,10 @@ enum ProductsStatus {
   pageLoaded,
   deletingProduct,
   productDeleted,
-  productDeletionError
+  productDeletionError,
+  updatingProduct,
+  productUpdated,
+  productUpdateError,
 }
 
 class ProductsState extends Equatable {
