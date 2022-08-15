@@ -5,8 +5,8 @@ import 'package:shopping/domain/entities/order_entity.dart';
 import 'package:shopping/domain/repositories/dio/dio_repository.dart';
 import 'package:shopping/domain/repositories/i_order_repository.dart';
 
-class DioProductRepository extends IOrderRepository implements DioRepository {
-  DioProductRepository({required this.dioClient});
+class DioOrderRepository extends IOrderRepository implements DioRepository {
+  DioOrderRepository({required this.dioClient});
 
   @override
   String get basePath => 'api/order';

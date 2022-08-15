@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shopping/domain/entities/entity.dart';
 import 'package:shopping/domain/entities/order_product_entity.dart';
 import 'package:shopping/domain/entities/user_entity.dart';
@@ -11,11 +13,12 @@ class Order extends Entity {
   });
 
   factory Order.fromJson({required Map<String, dynamic> json}) {
+    log('$json');
     final id = json['id'] as String;
     final fromUser = json['fromUser'] as Map<String, dynamic>;
     final toUser = json['toUser'] as Map<String, dynamic>;
     final orderProducts =
-        List<Map<String, dynamic>>.from(json['products'] as List);
+        List<Map<String, dynamic>>.from(json['orderProducts'] as List);
 
     return Order(
       id: id,

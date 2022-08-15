@@ -4,6 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/clients/shared_preferences.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
+import 'package:shopping/domain/repositories/dio/dio_order_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
 import 'package:shopping/ui/paths.dart';
@@ -55,14 +56,19 @@ class Shopping extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<DioAuthRepository>(
-          create: (_) =>
-              DioAuthRepository(dioClient: dioClient, lastSessionToken: token),
+          create: (_) => DioAuthRepository(
+            dioClient: dioClient,
+            lastSessionToken: token,
+          ),
         ),
         RepositoryProvider<DioUserRepository>(
           create: (_) => DioUserRepository(dioClient: dioClient),
         ),
         RepositoryProvider<DioProductRepository>(
           create: (_) => DioProductRepository(dioClient: dioClient),
+        ),
+        RepositoryProvider<DioOrderRepository>(
+          create: (_) => DioOrderRepository(dioClient: dioClient),
         ),
       ],
       child: child,
