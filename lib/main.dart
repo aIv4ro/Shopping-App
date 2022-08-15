@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -17,9 +15,11 @@ void main() async {
   await SharedPreferencesClient.init();
   final token = SharedPreferencesClient.getToken();
 
-  runApp(Shopping(
-    lastSessionToken: token,
-  ));
+  runApp(
+    Shopping(
+      lastSessionToken: token,
+    ),
+  );
 }
 
 class Shopping extends StatelessWidget {

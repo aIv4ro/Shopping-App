@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/home/home_event.dart';
-import 'package:shopping/blocs/home/home_state.dart';
-import 'package:shopping/blocs/register/register_state.dart';
 
 class CreateProductPopup extends StatefulWidget {
   const CreateProductPopup({super.key});

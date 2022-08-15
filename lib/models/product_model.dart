@@ -19,6 +19,7 @@ class Product extends Entity {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'name': name,

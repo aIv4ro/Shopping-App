@@ -49,7 +49,10 @@ class DioProductRepository extends IOrderRepository implements DioRepository {
 
   @override
   Future<Order> update({required Order model}) async {
-    final res = await dio.patch('$basePath/${model.id}');
+    final res = await dio.patch(
+      '$basePath/${model.id}',
+      data: {'updatedFields': model.toJson()},
+    );
     final body = res.data as Map<String, dynamic>;
     return Order.fromJson(json: body);
   }

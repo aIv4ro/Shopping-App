@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/products_bloc/products_state.dart';
@@ -64,7 +63,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     emit(state.copyWith(status: () => ProductsStatus.updatingProduct));
     try {
       final productForUpdate = event.product;
-      log('$productForUpdate');
       final updatedProduct = await productRepository.update(
         model: productForUpdate,
       );

@@ -24,6 +24,7 @@ class Order extends Entity {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'fromUser': fromUser.id,

@@ -8,7 +8,7 @@ class User extends Entity {
     required this.name,
     required this.surname,
   });
-
+  @override
   factory User.fromJson(Map<String, dynamic> json) {
     final id = json['id'];
     final email = json['email'];
@@ -23,6 +23,7 @@ class User extends Entity {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'email': email,

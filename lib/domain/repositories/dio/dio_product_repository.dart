@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/entities/product_entity.dart';
-import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_repository.dart';
 import 'package:shopping/domain/repositories/i_product_repository.dart';
 
@@ -51,7 +49,10 @@ class DioProductRepository extends IProductRepository implements DioRepository {
 
   @override
   FutureOr<Product> update({required Product model}) async {
-    final res = await dio.patch('$basePath/${model.id}');
+    final res = await dio.patch(
+      '$basePath/${model.id}',
+      data: {'updatedFields': model.toJson()},
+    );
     final body = res.data as Map<String, dynamic>;
     return Product.fromJson(json: body);
   }

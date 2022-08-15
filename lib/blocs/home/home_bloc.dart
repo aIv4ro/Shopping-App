@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/home/home_event.dart';
 import 'package:shopping/blocs/home/home_state.dart';

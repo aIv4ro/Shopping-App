@@ -47,7 +47,10 @@ class DioUserRepository extends IUserRepository implements DioRepository {
 
   @override
   Future<User> update({required User model}) async {
-    final res = await dio.patch('$basePath/${model.id}');
+    final res = await dio.patch(
+      '$basePath/${model.id}',
+      data: {'updatedFields': model.toJson()},
+    );
     final body = res.data as Map<String, dynamic>;
     return User.fromJson(json: body);
   }
