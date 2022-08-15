@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/products_bloc/products_state.dart';
+import 'package:shopping/domain/entities/product_entity.dart';
 import 'package:shopping/domain/repositories/i_product_repository.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
@@ -10,6 +12,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   }) : super(const ProductsState()) {
     on<LoadNextPageEvent>(_loadNextPage);
     on<DeleteProductEvent>(_deleteProduct);
+    on<CreateProductEvent>(_createProduct);
     on<UpdateProductEvent>(_updateProduct);
   }
 
@@ -53,6 +56,33 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       emit(state.copyWith(status: () => ProductsStatus.productDeleted));
     } else {
       emit(state.copyWith(status: () => ProductsStatus.productDeletionError));
+    }
+  }
+
+  Future<void> _createProduct(
+    CreateProductEvent event,
+    Emitter<ProductsState> emit,
+  ) async {
+    emit(state.copyWith(status: () => ProductsStatus.creatingProduct));
+    final product = Product(
+      id: '',
+      name: event.name,
+      description: event.description,
+    );
+
+    try {
+      final newProduct = await productRepository.create(model: product);
+      final products = List.of(state.products)
+        ..add(newProduct)
+        ..sort((a, b) => a.name.compareTo(b.name));
+      emit(
+        state.copyWith(
+          status: () => ProductsStatus.productCreated,
+          products: () => products,
+        ),
+      );
+    } catch (err) {
+      emit(state.copyWith(status: () => ProductsStatus.productCreationError));
     }
   }
 

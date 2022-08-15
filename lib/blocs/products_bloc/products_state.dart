@@ -11,6 +11,9 @@ enum ProductsStatus {
   updatingProduct,
   productUpdated,
   productUpdateError,
+  creatingProduct,
+  productCreated,
+  productCreationError
 }
 
 class ProductsState extends Equatable {

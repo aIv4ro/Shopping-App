@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/products_bloc/products_state.dart';
+import 'package:shopping/ui/pages/products/widgets/create_product_popup.dart';
 import 'package:shopping/ui/pages/products/widgets/product_item.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -54,6 +55,16 @@ class _ProductPageState extends State<ProductsPage> {
             Navigator.of(context).pop();
             _showSnackbarMessage(message: 'Could not update product');
           }
+
+          if (state.status == ProductsStatus.productCreated) {
+            Navigator.of(context).pop();
+            _showSnackbarMessage(message: 'Product created');
+          }
+
+          if (state.status == ProductsStatus.productCreationError) {
+            Navigator.of(context).pop();
+            _showSnackbarMessage(message: 'Could not create product');
+          }
         },
         child: BlocBuilder<ProductsBloc, ProductsState>(
           builder: (context, state) {
@@ -89,6 +100,20 @@ class _ProductPageState extends State<ProductsPage> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return BlocProvider.value(
+                value: _bloc,
+                child: const CreateProductPopup(),
+              );
+            },
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

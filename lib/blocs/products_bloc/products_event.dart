@@ -20,6 +20,16 @@ class DeleteProductEvent extends ProductsEvent {
   List<Object?> get props => [id];
 }
 
+class CreateProductEvent extends ProductsEvent {
+  const CreateProductEvent({required this.name, this.description});
+
+  final String name;
+  final String? description;
+
+  @override
+  List<Object?> get props => [name, description];
+}
+
 class UpdateProductEvent extends ProductsEvent {
   const UpdateProductEvent({required this.product});
   final Product product;
