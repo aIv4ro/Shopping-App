@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/home/home_event.dart';
 import 'package:shopping/blocs/home/home_state.dart';
-import 'package:shopping/ui/pages/home/widgets/create_product_dialog.dart';
 import 'package:shopping/ui/paths.dart';
 
 class HomePage extends StatefulWidget {
@@ -58,18 +57,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => BlocProvider.value(
-                value: _bloc,
-                child: const CreateProductPopup(),
-              ),
-            );
-          },
-          child: const Icon(Icons.create),
         ),
         body: Column(),
       ),

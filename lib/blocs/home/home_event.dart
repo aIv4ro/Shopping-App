@@ -14,13 +14,3 @@ class LogoutEvent extends HomeEvent {
 class LoadCurrentUserEvent extends HomeEvent {
   const LoadCurrentUserEvent();
 }
-
-class CreateProductEvent extends HomeEvent {
-  const CreateProductEvent({required this.name, this.description});
-
-  final String name;
-  final String? description;
-
-  @override
-  List<Object?> get props => [name, description];
-}

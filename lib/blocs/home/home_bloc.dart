@@ -16,7 +16,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) : super(const HomeState()) {
     on<LogoutEvent>(_logout);
     on<LoadCurrentUserEvent>(_loadCurrentUser);
-    on<CreateProductEvent>(_createProduct);
   }
 
   final IAuthRepository authRepository;
@@ -46,21 +45,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (err) {
       emit(state.copyWith(status: () => HomeStatus.currentUserLoadError));
     }
-  }
-
-  Future<void> _createProduct(
-    CreateProductEvent event,
-    Emitter<HomeState> emit,
-  ) async {
-    emit(state.copyWith(status: () => HomeStatus.creatingProduct));
-    final product = Product(
-      id: '',
-      name: event.name,
-      description: event.description,
-    );
-
-    await productRepository.create(model: product);
-
-    emit(state.copyWith(status: () => HomeStatus.productCreated));
   }
 }
