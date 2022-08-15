@@ -4,6 +4,7 @@ import 'package:shopping/blocs/create_order/create_order_bloc.dart';
 import 'package:shopping/blocs/create_order/create_order_event.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/login/login_bloc.dart';
+import 'package:shopping/blocs/pending_orders/pending_orders_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
@@ -16,6 +17,7 @@ import 'package:shopping/repositories/firebase/product_repository.dart';
 import 'package:shopping/repositories/firebase/user_repository.dart';
 import 'package:shopping/ui/pages/home/home_page.dart';
 import 'package:shopping/ui/pages/login/login_page.dart';
+import 'package:shopping/ui/pages/pending_orders/pending_orders_page.dart';
 import 'package:shopping/ui/pages/products/products_page.dart';
 import 'package:shopping/ui/pages/register/register_page.dart';
 import 'package:shopping/ui/paths.dart';
@@ -56,23 +58,10 @@ final routes = <String, WidgetBuilder>{
       child: const ProductsPage(),
     );
   },
-  createOrder: (context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(create: (_) => ProductRepository()),
-        RepositoryProvider(create: (_) => OrderRepository()),
-        RepositoryProvider(create: (_) => UserRepository()),
-      ],
-      child: BlocProvider(
-        create: (blocProviderContext) => CreateOrderBloc(
-          userRepository: blocProviderContext.read(),
-          productRepository: blocProviderContext.read(),
-          orderRepository: blocProviderContext.read(),
-        )..add(
-            const InitialLoadEvent(),
-          ),
-        child: const CreateOrderPage(),
-      ),
+  pendingOrders: (context) {
+    return BlocProvider(
+      create: (_) => PendingOrdersBloc(),
+      child: const PendingOrdersPage(),
     );
   }
 };

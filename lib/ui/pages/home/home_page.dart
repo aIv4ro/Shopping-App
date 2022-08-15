@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: const Icon(Icons.shopping_cart),
                 title: const Text('Pending carts'),
-                onTap: () => Navigator.of(context).pushNamed(products),
+                onTap: () => Navigator.of(context).pushNamed(pendingOrders),
               ),
             ],
           ),
