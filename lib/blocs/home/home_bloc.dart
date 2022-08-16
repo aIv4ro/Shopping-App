@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/home/home_event.dart';
 import 'package:shopping/blocs/home/home_state.dart';
-import 'package:shopping/domain/entities/product_entity.dart';
 import 'package:shopping/domain/entities/user_entity.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
 import 'package:shopping/domain/repositories/i_product_repository.dart';

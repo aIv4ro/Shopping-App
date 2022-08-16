@@ -9,7 +9,6 @@ import 'package:shopping/blocs/pending_orders/pending_orders_event.dart';
 import 'package:shopping/blocs/products_bloc/products_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
-import 'package:shopping/domain/entities/order_entity.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_order_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';

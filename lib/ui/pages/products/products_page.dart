@@ -5,6 +5,7 @@ import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/products_bloc/products_state.dart';
 import 'package:shopping/ui/pages/products/widgets/create_product_popup.dart';
 import 'package:shopping/ui/pages/products/widgets/product_item.dart';
+import 'package:shopping/ui/pages/products/widgets/products_app_bar.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -30,11 +31,15 @@ class _ProductPageState extends State<ProductsPage> {
     );
   }
 
+  void _onFilterChanged(String? value) {
+    _bloc.add(FilterProductsEvent(newFilterValue: value));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Products'),
+      appBar: ProductsAppBar(
+        onFilterChanged: _onFilterChanged,
       ),
       body: BlocListener<ProductsBloc, ProductsState>(
         listener: (context, state) {
@@ -68,7 +73,7 @@ class _ProductPageState extends State<ProductsPage> {
         },
         child: BlocBuilder<ProductsBloc, ProductsState>(
           builder: (context, state) {
-            final products = state.products;
+            final products = state.filteredProducts;
             final productsLength = products.length;
             final hasReachedMax = state.hasReachedMax;
             final isLoadingPage = state.status != ProductsStatus.loadingPage;

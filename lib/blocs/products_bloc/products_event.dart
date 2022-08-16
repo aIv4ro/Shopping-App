@@ -37,3 +37,11 @@ class UpdateProductEvent extends ProductsEvent {
   @override
   List<Object?> get props => [product];
 }
+
+class FilterProductsEvent extends ProductsEvent {
+  const FilterProductsEvent({required this.newFilterValue});
+  final String? newFilterValue;
+
+  @override
+  List<Object?> get props => [newFilterValue];
+}

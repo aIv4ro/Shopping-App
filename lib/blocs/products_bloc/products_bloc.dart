@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/products_bloc/products_state.dart';
@@ -14,6 +13,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<DeleteProductEvent>(_deleteProduct);
     on<CreateProductEvent>(_createProduct);
     on<UpdateProductEvent>(_updateProduct);
+    on<FilterProductsEvent>(_filterChange);
   }
 
   final IProductRepository productRepository;
@@ -113,5 +113,16 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     } catch (err) {
       emit(state.copyWith(status: () => ProductsStatus.productUpdateError));
     }
+  }
+
+  FutureOr<void> _filterChange(
+    FilterProductsEvent event,
+    Emitter<ProductsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        filter: () => event.newFilterValue,
+      ),
+    );
   }
 }
