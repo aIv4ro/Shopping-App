@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:shopping/domain/entities/entity.dart';
 import 'package:shopping/domain/entities/order_product_entity.dart';
 import 'package:shopping/domain/entities/user_entity.dart';
 
 class Order extends Entity {
-  Order({
+  const Order({
     required super.id,
     required this.fromUser,
     required this.toUser,
@@ -13,7 +11,6 @@ class Order extends Entity {
   });
 
   factory Order.fromJson({required Map<String, dynamic> json}) {
-    log('$json');
     final id = json['id'] as String;
     final fromUser = json['fromUser'] as Map<String, dynamic>;
     final toUser = json['toUser'] as Map<String, dynamic>;
@@ -30,6 +27,13 @@ class Order extends Entity {
     );
   }
 
+  static const empty = Order(
+    id: '',
+    fromUser: User.empty,
+    toUser: User.empty,
+    orderProducts: [],
+  );
+
   final User fromUser;
   final User toUser;
   final List<OrderProduct> orderProducts;
@@ -37,8 +41,8 @@ class Order extends Entity {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'fromUser': fromUser.toJson(),
-      'toUser': toUser.toJson(),
+      'fromUser': fromUser.id,
+      'toUser': toUser.id,
       'products': orderProducts.map((orderProduct) {
         return orderProduct.toJson();
       }).toList(),

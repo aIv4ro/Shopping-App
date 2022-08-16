@@ -26,7 +26,7 @@ class OrderProduct extends Entity {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'product': product.toJson(),
+      'product': product.id,
       'quantity': quantity,
     };
   }

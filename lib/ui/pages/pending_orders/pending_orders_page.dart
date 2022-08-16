@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/pending_orders/pending_orders_bloc.dart';
 import 'package:shopping/blocs/pending_orders/pending_orders_state.dart';
+import 'package:shopping/ui/pages/pending_orders/widgets/pending_orders_item.dart';
 
 class PendingOrdersPage extends StatefulWidget {
   const PendingOrdersPage({super.key});
@@ -26,14 +26,17 @@ class _PendingOrdersPageState extends State<PendingOrdersPage> {
             );
           }
 
-          return ListView.builder(
+          return ListView.separated(
             itemCount: state.orders.length,
             itemBuilder: (context, index) {
               final order = state.orders[index];
 
-              return ListTile(
-                title: Text(order.fromUser.name),
+              return PendingOrderItem(
+                order: order,
               );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider(thickness: 2);
             },
           );
         },

@@ -27,6 +27,8 @@ class User extends Entity {
     );
   }
 
+  static const empty = User(id: '', email: '', name: '', surname: '');
+
   final String email;
   final String name;
   final String surname;
