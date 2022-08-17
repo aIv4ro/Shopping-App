@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () => Navigator.of(context).pushNamed(createOrder),
           label: const Text('Create cart'),
           icon: const Icon(Icons.add_shopping_cart),
         ),
