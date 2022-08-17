@@ -103,3 +103,31 @@ class ProductNameValidation extends Validation {
     return null;
   }
 }
+
+class NumberValidator extends Validation {
+  @override
+  String? validate(String? value) {
+    final valueToNumber = double.tryParse(value ?? '');
+
+    if (valueToNumber == null) {
+      return 'The field have to be a number';
+    }
+
+    if (valueToNumber <= 0) {
+      return 'The number have to be positive';
+    }
+
+    return null;
+  }
+}
+
+class EmptyValidator extends Validation {
+  @override
+  String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Field can't be empty";
+    }
+
+    return null;
+  }
+}

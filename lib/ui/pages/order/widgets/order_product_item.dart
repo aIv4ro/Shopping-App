@@ -54,7 +54,7 @@ class _OrderProductItemState extends State<OrderProductItem> {
                       icon: const Icon(Icons.add),
                     ),
                     Text(
-                      orderProduct.quantity.toString(),
+                      '${orderProduct.quantity} (${product.unit})',
                       style: GoogleFonts.nunito(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,

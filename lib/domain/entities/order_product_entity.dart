@@ -11,12 +11,12 @@ class OrderProduct extends Entity {
   factory OrderProduct.fromJson({required Map<String, dynamic> json}) {
     final id = json['_id'] as String;
     final product = json['product'] as Map<String, dynamic>;
-    final quantity = (json['quantity'] as int).toDouble();
+    final quantity = json['quantity'] as num;
 
     return OrderProduct(
       id: id,
       product: Product.fromJson(json: product),
-      quantity: quantity,
+      quantity: quantity.toDouble(),
     );
   }
 
