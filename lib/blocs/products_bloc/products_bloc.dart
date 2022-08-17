@@ -121,7 +121,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   ) {
     emit(
       state.copyWith(
-        filter: () => event.newFilterValue,
+        filter: () => event.newFilterValue?.toLowerCase(),
       ),
     );
   }

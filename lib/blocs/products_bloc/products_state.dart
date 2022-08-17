@@ -34,7 +34,7 @@ class ProductsState extends Equatable {
   final bool hasReachedMax;
   List<Product> get filteredProducts {
     return products.where((element) {
-      return element.name.contains(filter ?? '');
+      return element.name.toLowerCase().contains(filter ?? '');
     }).toList();
   }
 
