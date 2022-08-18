@@ -34,10 +34,10 @@ class _ProductsListState extends State<ProductsList> {
         final isLoadingPage = state.status != ProductsListStatus.loadingPage;
 
         return ListView.separated(
-          padding: const EdgeInsets.only(bottom: 50),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
           separatorBuilder: (context, index) {
-            return const Divider(
-              thickness: 2,
+            return const SizedBox(
+              height: 10,
             );
           },
           itemCount: hasReachedMax ? productsLength : productsLength + 1,

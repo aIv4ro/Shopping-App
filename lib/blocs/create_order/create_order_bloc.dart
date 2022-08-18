@@ -23,8 +23,11 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     AddOrderProductEvent event,
     Emitter<CreateOrderState> emit,
   ) {
-    final newOrderProduct =
-        OrderProduct(product: event.product, quantity: 0, id: '');
+    final newOrderProduct = OrderProduct(
+      product: event.product,
+      quantity: event.product.increment,
+      id: '',
+    );
     final orderProducts = List.of(state.orderProducts)..add(newOrderProduct);
 
     emit(

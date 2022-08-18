@@ -21,7 +21,11 @@ class OrderProduct extends Entity {
   }
 
   final Product product;
-  final double quantity;
+  double quantity;
+  String get quantityFormatted => '$quantity (${product.unit})';
+
+  void increaseQuantity() => quantity += product.increment;
+  void decreaseQuantity() => quantity -= product.increment;
 
   @override
   Map<String, dynamic> toJson() {

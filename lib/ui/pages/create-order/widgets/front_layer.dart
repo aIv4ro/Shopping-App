@@ -5,6 +5,7 @@ import 'package:shopping/blocs/create_order/create_order_event.dart';
 import 'package:shopping/blocs/create_order/create_order_state.dart';
 import 'package:shopping/blocs/products_list/products_list_bloc.dart';
 import 'package:shopping/blocs/products_list/products_list_event.dart';
+import 'package:shopping/ui/pages/create-order/widgets/order_product_item.dart';
 
 class BackLayer extends StatefulWidget {
   const BackLayer({super.key});
@@ -28,36 +29,43 @@ class _BackLayerState extends State<BackLayer> {
   Widget build(BuildContext context) {
     return BlocBuilder<CreateOrderBloc, CreateOrderState>(
       builder: (context, state) {
-        return ListView.separated(
-          itemBuilder: (context, index) {
-            final orderProduct = state.orderProducts[index];
-            final product = orderProduct.product;
-
-            return Dismissible(
-              key: Key(product.id),
-              onDismissed: (direction) {
-                _createOrderBloc.add(
-                  RemoveOrderProductEvent(orderProduct: orderProduct),
-                );
-                _productsListBloc.add(
-                  AddProductEvent(product: product),
-                );
-              },
-              confirmDismiss: (direction) async {
-                return direction == DismissDirection.endToStart;
-              },
-              child: ListTile(
-                title: Text(product.name),
-                subtitle: product.description != null
-                    ? Text(product.description!)
-                    : null,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Added products',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
-            );
-          },
-          separatorBuilder: (context, index) => const Divider(
-            thickness: 2,
-          ),
-          itemCount: state.orderProducts.length,
+            ),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                itemBuilder: (context, index) {
+                  final orderProduct = state.orderProducts[index];
+
+                  return OrderProductItem(
+                    orderProduct: orderProduct,
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: state.orderProducts.length,
+              ),
+            ),
+          ],
         );
       },
     );

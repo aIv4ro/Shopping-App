@@ -42,6 +42,13 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
         ],
         onFilterChanged: _handleFilterChange,
       ),
+      subHeader: const Padding(
+        padding: EdgeInsets.only(left: 10, top: 20, bottom: 10),
+        child: Text(
+          'Products',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
       backLayer: const BackLayer(),
       frontLayer: const FrontLayer(),
     );

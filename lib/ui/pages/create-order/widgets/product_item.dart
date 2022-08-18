@@ -20,15 +20,19 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(product.name),
-      subtitle: product.description == null ? null : Text(product.description!),
-      trailing: TextButton(
-        onPressed: () {
-          productsListBloc.add(RemoveProductEvent(product: product));
-          createOrderBloc.add(AddOrderProductEvent(product: product));
-        },
-        child: const Text('Add'),
+    return Material(
+      elevation: 10,
+      child: ListTile(
+        title: Text(product.name),
+        subtitle:
+            product.description == null ? null : Text(product.description!),
+        trailing: TextButton(
+          onPressed: () {
+            productsListBloc.add(RemoveProductEvent(product: product));
+            createOrderBloc.add(AddOrderProductEvent(product: product));
+          },
+          child: const Text('Add'),
+        ),
       ),
     );
   }
