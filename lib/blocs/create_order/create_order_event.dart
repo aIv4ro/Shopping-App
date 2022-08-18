@@ -1,33 +1,13 @@
 import 'package:equatable/equatable.dart';
-import 'package:shopping/models/order_product_model.dart';
-import 'package:shopping/models/product_model.dart';
-import 'package:shopping/models/user_model.dart';
+import 'package:shopping/domain/entities/order_product_entity.dart';
+import 'package:shopping/domain/entities/product_entity.dart';
+import 'package:shopping/domain/entities/user_entity.dart';
 
 abstract class CreateOrderEvent extends Equatable {
   const CreateOrderEvent();
 
   @override
   List<Object> get props => [];
-}
-
-class InitialLoadEvent extends CreateOrderEvent {
-  const InitialLoadEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CreateProductEvent extends CreateOrderEvent {
-  const CreateProductEvent({
-    required this.name,
-    this.description = '',
-  });
-
-  final String name;
-  final String description;
-
-  @override
-  List<Object> get props => [name, description];
 }
 
 class AddOrderProductEvent extends CreateOrderEvent {

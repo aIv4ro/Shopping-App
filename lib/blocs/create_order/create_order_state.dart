@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:shopping/models/order_product_model.dart';
-import 'package:shopping/models/product_model.dart';
-import 'package:shopping/models/user_model.dart';
+import 'package:shopping/domain/entities/order_product_entity.dart';
+import 'package:shopping/domain/entities/product_entity.dart';
+import 'package:shopping/domain/entities/user_entity.dart';
 
 enum CreateOrderStatus {
   initialStatus,
@@ -16,13 +16,11 @@ class CreateOrderState extends Equatable {
   const CreateOrderState({
     this.status = CreateOrderStatus.initialStatus,
     this.orderProducts = const [],
-    this.products = const [],
     this.users = const [],
   });
 
   final CreateOrderStatus status;
   final List<OrderProduct> orderProducts;
-  final List<Product> products;
   final List<User> users;
 
   CreateOrderState copyWith({
@@ -35,11 +33,10 @@ class CreateOrderState extends Equatable {
       status: status != null ? status() : this.status,
       orderProducts:
           orderProducts != null ? orderProducts() : this.orderProducts,
-      products: products != null ? products() : this.products,
       users: users != null ? users() : this.users,
     );
   }
 
   @override
-  List<Object?> get props => [status, orderProducts, products, users];
+  List<Object?> get props => [status, orderProducts, users];
 }

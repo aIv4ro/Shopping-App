@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping/blocs/create_order/create_order_bloc.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/login/login_bloc.dart';
 import 'package:shopping/blocs/order/order_bloc.dart';
@@ -7,12 +8,14 @@ import 'package:shopping/blocs/order/order_event.dart';
 import 'package:shopping/blocs/pending_orders/pending_orders_bloc.dart';
 import 'package:shopping/blocs/pending_orders/pending_orders_event.dart';
 import 'package:shopping/blocs/products_bloc/products_bloc.dart';
+import 'package:shopping/blocs/products_list/products_list_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_order_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
+import 'package:shopping/repositories/firebase/user_repository.dart';
 import 'package:shopping/ui/pages/create-order/create_order_page.dart';
 import 'package:shopping/ui/pages/home/home_page.dart';
 import 'package:shopping/ui/pages/login/login_page.dart';
@@ -85,6 +88,21 @@ final routes = <String, WidgetBuilder>{
     );
   },
   createOrder: (context) {
-    return const CreateOrderPage();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ProductsListBloc(
+            productRepository: context.read<DioProductRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => CreateOrderBloc(
+            userRepository: context.read<DioUserRepository>(),
+            orderRepository: context.read<DioOrderRepository>(),
+          ),
+        )
+      ],
+      child: const CreateOrderPage(),
+    );
   }
 };
