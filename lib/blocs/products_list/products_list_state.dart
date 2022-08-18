@@ -21,7 +21,7 @@ class ProductsListState extends Equatable {
 
   List<Product> get productsFilter {
     return products.where((product) {
-      return product.name.contains(filter);
+      return product.name.toLowerCase().contains(filter);
     }).toList();
   }
 

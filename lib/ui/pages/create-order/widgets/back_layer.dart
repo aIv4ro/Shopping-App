@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/create_order/create_order_bloc.dart';
 import 'package:shopping/blocs/products_list/products_list_bloc.dart';
 import 'package:shopping/ui/pages/create-order/widgets/product_item.dart';
-import 'package:shopping/ui/widgets/products_list/products_list.dart';
+import 'package:shopping/ui/widgets/products_list.dart';
 
-class BackLayer extends StatefulWidget {
-  const BackLayer({super.key});
+class FrontLayer extends StatefulWidget {
+  const FrontLayer({super.key});
 
   @override
-  State<BackLayer> createState() => _BackLayerState();
+  State<FrontLayer> createState() => _FrontLayerState();
 }
 
-class _BackLayerState extends State<BackLayer> {
+class _FrontLayerState extends State<FrontLayer> {
   late final ProductsListBloc _productsListBloc;
   late final CreateOrderBloc _createOrderBloc;
 

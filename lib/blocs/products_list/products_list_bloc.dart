@@ -11,6 +11,7 @@ class ProductsListBloc extends Bloc<ProductsListEvent, ProductsListState> {
     on<LoadNextPageEvent>(_loadNextPage);
     on<RemoveProductEvent>(_removeProductEvent);
     on<AddProductEvent>(_addProductEvent);
+    on<FilterChangeEvent>(_filterChange);
   }
 
   final IProductRepository productRepository;
@@ -59,5 +60,12 @@ class ProductsListBloc extends Bloc<ProductsListEvent, ProductsListState> {
           ..sort((a, b) => a.name.compareTo(b.name)),
       ),
     );
+  }
+
+  FutureOr<void> _filterChange(
+    FilterChangeEvent event,
+    Emitter<ProductsListState> emit,
+  ) {
+    emit(state.copyWith(filter: () => event.newFilterValue.toLowerCase()));
   }
 }

@@ -5,7 +5,7 @@ import 'package:shopping/blocs/products_bloc/products_event.dart';
 import 'package:shopping/blocs/products_bloc/products_state.dart';
 import 'package:shopping/ui/pages/products/widgets/create_product_popup.dart';
 import 'package:shopping/ui/pages/products/widgets/product_item.dart';
-import 'package:shopping/ui/pages/products/widgets/products_app_bar.dart';
+import 'package:shopping/ui/widgets/search_bar.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -38,7 +38,8 @@ class _ProductPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProductsAppBar(
+      appBar: SearchBar(
+        title: 'Products',
         onFilterChanged: _onFilterChanged,
       ),
       body: BlocListener<ProductsBloc, ProductsState>(

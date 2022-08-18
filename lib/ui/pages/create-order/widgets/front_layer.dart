@@ -6,14 +6,14 @@ import 'package:shopping/blocs/create_order/create_order_state.dart';
 import 'package:shopping/blocs/products_list/products_list_bloc.dart';
 import 'package:shopping/blocs/products_list/products_list_event.dart';
 
-class FrontLayer extends StatefulWidget {
-  const FrontLayer({super.key});
+class BackLayer extends StatefulWidget {
+  const BackLayer({super.key});
 
   @override
-  State<FrontLayer> createState() => _FrontLayerState();
+  State<BackLayer> createState() => _BackLayerState();
 }
 
-class _FrontLayerState extends State<FrontLayer> {
+class _BackLayerState extends State<BackLayer> {
   late final CreateOrderBloc _createOrderBloc;
   late final ProductsListBloc _productsListBloc;
 

@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
-class ProductsAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const ProductsAppBar({super.key, this.onFilterChanged});
+class SearchBar extends StatefulWidget implements PreferredSizeWidget {
+  const SearchBar({
+    super.key,
+    this.title = '',
+    this.onFilterChanged,
+    this.actions = const [],
+  });
 
   final ValueChanged<String>? onFilterChanged;
+  final String title;
+  final List<Widget> actions;
 
   @override
-  State<ProductsAppBar> createState() => _ProductsAppBarState();
+  State<SearchBar> createState() => _SearchBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _ProductsAppBarState extends State<ProductsAppBar> {
+class _SearchBarState extends State<SearchBar> {
   bool _isSearchOpen = false;
 
   void _toggleSearch() => setState(() => _isSearchOpen = !_isSearchOpen);
@@ -25,7 +32,7 @@ class _ProductsAppBarState extends State<ProductsAppBar> {
               onPressed: _toggleSearch,
               onChanged: widget.onFilterChanged,
             )
-          : const Text('Products'),
+          : Text(widget.title),
       actions: _isSearchOpen
           ? null
           : [
@@ -33,6 +40,7 @@ class _ProductsAppBarState extends State<ProductsAppBar> {
                 onPressed: _toggleSearch,
                 icon: const Icon(Icons.search),
               ),
+              ...widget.actions,
             ],
     );
   }
