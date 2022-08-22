@@ -23,6 +23,7 @@ import 'package:shopping/ui/pages/pending_orders/pending_orders_page.dart';
 import 'package:shopping/ui/pages/products/products_page.dart';
 import 'package:shopping/ui/pages/register/register_page.dart';
 import 'package:shopping/ui/paths.dart';
+import 'package:shopping/ui/theme/theme_bloc.dart';
 
 final routes = <String, WidgetBuilder>{
   login: (context) {
@@ -43,12 +44,19 @@ final routes = <String, WidgetBuilder>{
     );
   },
   home: (context) {
-    return BlocProvider(
-      create: (_) => HomeBloc(
-        authRepository: context.read<DioAuthRepository>(),
-        userRepository: context.read<DioUserRepository>(),
-        productRepository: context.read<DioProductRepository>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => HomeBloc(
+            authRepository: context.read<DioAuthRepository>(),
+            userRepository: context.read<DioUserRepository>(),
+            productRepository: context.read<DioProductRepository>(),
+          ),
+        ),
+        BlocProvider.value(
+          value: context.read<ThemeBloc>(),
+        ),
+      ],
       child: const HomePage(),
     );
   },

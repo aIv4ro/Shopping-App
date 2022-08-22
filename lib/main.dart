@@ -9,6 +9,8 @@ import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
 import 'package:shopping/ui/paths.dart';
 import 'package:shopping/ui/routes.dart';
+import 'package:shopping/ui/theme/theme_bloc.dart';
+import 'package:shopping/ui/theme/theme_state.dart';
 
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -34,17 +36,19 @@ class Shopping extends StatelessWidget {
     final isValid = lastSessionToken != null;
 
     return _buildRepositoryProvider(
-      child: MaterialApp(
-        title: 'Shopping',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          inputDecorationTheme: const InputDecorationTheme(
-            border: OutlineInputBorder(),
-          ),
+      child: BlocProvider(
+        create: (context) => ThemeBloc(),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              title: 'Shopping',
+              theme: state.theme.data,
+              routes: routes,
+              initialRoute: isValid ? home : login,
+              debugShowCheckedModeBanner: false,
+            );
+          },
         ),
-        routes: routes,
-        initialRoute: isValid ? home : login,
-        debugShowCheckedModeBanner: false,
       ),
       token: isValid ? lastSessionToken : null,
     );

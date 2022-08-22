@@ -31,8 +31,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   Widget build(BuildContext context) {
     return BackdropScaffold(
       frontLayerActiveFactor: .95,
-      backLayerBackgroundColor: Theme.of(context).colorScheme.onPrimary,
-      frontLayerBackgroundColor: const Color(0xFFf5ebe0),
+      backLayerBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      frontLayerBackgroundColor: Theme.of(context).backgroundColor,
       appBar: SearchBar(
         title: 'Create order',
         actions: const [

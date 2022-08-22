@@ -4,6 +4,9 @@ import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/home/home_event.dart';
 import 'package:shopping/blocs/home/home_state.dart';
 import 'package:shopping/ui/paths.dart';
+import 'package:shopping/ui/theme/theme_bloc.dart';
+import 'package:shopping/ui/theme/theme_event.dart';
+import 'package:shopping/ui/theme/theme_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,16 +16,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final HomeBloc _bloc;
+  late final HomeBloc _homeBloc;
+  late final ThemeBloc _themeBloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.read();
+    _homeBloc = context.read();
+    _themeBloc = context.read();
   }
 
   void _handleLogout() {
-    _bloc.add(const LogoutEvent());
+    _homeBloc.add(const LogoutEvent());
   }
 
   @override
@@ -40,7 +45,17 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               onPressed: _handleLogout,
               icon: const Icon(Icons.logout),
-            )
+            ),
+            IconButton(
+              onPressed: () => _themeBloc.add(const ToggleThemeEvent()),
+              icon: BlocBuilder<ThemeBloc, ThemeState>(
+                builder: (context, state) {
+                  return Icon(
+                    state.isDarkTheme ? Icons.dark_mode : Icons.light_mode,
+                  );
+                },
+              ),
+            ),
           ],
         ),
         drawer: Drawer(
