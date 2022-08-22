@@ -62,7 +62,7 @@ class SearchInput extends StatelessWidget {
       width: double.infinity,
       height: 40,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(

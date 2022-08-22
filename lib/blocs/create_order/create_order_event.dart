@@ -10,6 +10,10 @@ abstract class CreateOrderEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitialLoadEvent extends CreateOrderEvent {
+  const InitialLoadEvent();
+}
+
 class AddOrderProductEvent extends CreateOrderEvent {
   const AddOrderProductEvent({
     required this.product,
@@ -32,8 +36,8 @@ class RemoveOrderProductEvent extends CreateOrderEvent {
   List<Object> get props => [orderProduct];
 }
 
-class CreateOrder extends CreateOrderEvent {
-  const CreateOrder({
+class PostOrderEvent extends CreateOrderEvent {
+  const PostOrderEvent({
     required this.toUser,
   });
 

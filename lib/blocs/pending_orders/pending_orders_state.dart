@@ -17,8 +17,8 @@ class PendingOrdersState extends Equatable {
     List<Order> Function()? orders,
   }) {
     return PendingOrdersState(
-      status: status != null ? status() : this.status,
-      orders: orders != null ? orders() : this.orders,
+      status: status?.call() ?? this.status,
+      orders: orders?.call() ?? this.orders,
     );
   }
 

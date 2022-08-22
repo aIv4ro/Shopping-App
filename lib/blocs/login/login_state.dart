@@ -18,7 +18,7 @@ class LoginState extends Equatable {
     LoginStatus Function()? status,
   }) {
     return LoginState(
-      status: status != null ? status() : this.status,
+      status: status?.call() ?? this.status,
     );
   }
 

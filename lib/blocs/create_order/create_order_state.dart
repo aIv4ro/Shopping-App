@@ -30,10 +30,9 @@ class CreateOrderState extends Equatable {
     List<User> Function()? users,
   }) {
     return CreateOrderState(
-      status: status != null ? status() : this.status,
-      orderProducts:
-          orderProducts != null ? orderProducts() : this.orderProducts,
-      users: users != null ? users() : this.users,
+      status: status?.call() ?? this.status,
+      orderProducts: orderProducts?.call() ?? this.orderProducts,
+      users: users?.call() ?? this.users,
     );
   }
 

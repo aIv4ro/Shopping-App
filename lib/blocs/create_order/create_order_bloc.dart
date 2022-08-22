@@ -13,7 +13,8 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   }) : super(const CreateOrderState()) {
     on<AddOrderProductEvent>(_addOrderProductEvent);
     on<RemoveOrderProductEvent>(_removeOrderProductEvent);
-    on<CreateOrder>(_createOrder);
+    on<PostOrderEvent>(_postOrder);
+    on<InitialLoadEvent>(_initialLoad);
   }
 
   final IUserRepository userRepository;
@@ -51,8 +52,18 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     );
   }
 
-  Future<void> _createOrder(
-    CreateOrder event,
+  Future<void> _postOrder(
+    PostOrderEvent event,
     Emitter<CreateOrderState> emit,
   ) async {}
+
+  FutureOr<void> _initialLoad(
+    InitialLoadEvent event,
+    Emitter<CreateOrderState> emit,
+  ) async {
+    final users = await userRepository.findAll();
+    state.copyWith(
+      users: () => users,
+    );
+  }
 }

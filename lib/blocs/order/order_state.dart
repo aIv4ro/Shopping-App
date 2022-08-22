@@ -22,8 +22,8 @@ class OrderState extends Equatable {
     Order Function()? order,
   }) {
     return OrderState(
-      status: status != null ? status() : this.status,
-      order: order != null ? order() : this.order,
+      status: status?.call() ?? this.status,
+      order: order?.call() ?? this.order,
     );
   }
 

@@ -24,8 +24,8 @@ class RegisterState extends Equatable {
     List<String> Function()? emails,
   }) {
     return RegisterState(
-      status: status != null ? status() : this.status,
-      emails: emails != null ? emails() : this.emails,
+      status: status?.call() ?? this.status,
+      emails: emails?.call() ?? this.emails,
     );
   }
 

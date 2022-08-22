@@ -46,12 +46,11 @@ class ProductsState extends Equatable {
     bool Function()? hasReachedMax,
   }) {
     return ProductsState(
-      status: status != null ? status() : this.status,
-      products: products != null ? products() : this.products,
-      filter: filter != null ? filter() : this.filter,
-      offset: offset != null ? offset() : this.offset,
-      hasReachedMax:
-          hasReachedMax != null ? hasReachedMax() : this.hasReachedMax,
+      status: status?.call() ?? this.status,
+      products: products?.call() ?? this.products,
+      filter: filter?.call() ?? this.filter,
+      offset: offset?.call() ?? this.offset,
+      hasReachedMax: hasReachedMax?.call() ?? this.hasReachedMax,
     );
   }
 

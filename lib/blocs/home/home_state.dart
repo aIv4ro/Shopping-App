@@ -23,7 +23,7 @@ class HomeState extends Equatable {
     HomeStatus Function()? status,
   }) {
     return HomeState(
-      status: status != null ? status() : this.status,
+      status: status?.call() ?? this.status,
     );
   }
 
