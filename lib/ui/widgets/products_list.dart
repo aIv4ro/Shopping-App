@@ -4,7 +4,6 @@ import 'package:shopping/blocs/products_list/products_list_bloc.dart';
 import 'package:shopping/blocs/products_list/products_list_event.dart';
 import 'package:shopping/blocs/products_list/products_list_state.dart';
 import 'package:shopping/domain/entities/product_entity.dart';
-import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 
 class ProductsList extends StatefulWidget {
   const ProductsList({super.key, required this.productBuilder});
@@ -27,11 +26,15 @@ class _ProductsListState extends State<ProductsList> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsListBloc, ProductsListState>(
+      buildWhen: (previous, current) {
+        return previous.products != current.products ||
+            previous.filter != current.filter;
+      },
       builder: (context, state) {
         final products = state.productsFilter;
         final productsLength = products.length;
         final hasReachedMax = state.hasReachedMax;
-        final isLoadingPage = state.status != ProductsListStatus.loadingPage;
+        final isLoadingPage = state.status == ProductsListStatus.loadingPage;
 
         return ListView.separated(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
@@ -44,7 +47,7 @@ class _ProductsListState extends State<ProductsList> {
           itemBuilder: (context, index) {
             final isLastItem = index == productsLength;
 
-            if (isLastItem && isLoadingPage && !hasReachedMax) {
+            if (isLastItem && !isLoadingPage && !hasReachedMax) {
               _bloc.add(const LoadNextPageEvent());
             }
 

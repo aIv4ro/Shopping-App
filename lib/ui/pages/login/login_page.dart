@@ -5,7 +5,7 @@ import 'package:shopping/blocs/login/login_event.dart';
 import 'package:shopping/blocs/login/login_state.dart';
 import 'package:shopping/ui/pages/login/widgets/login_button.dart';
 import 'package:shopping/ui/paths.dart';
-import 'package:shopping/widgets/password_input.dart';
+import 'package:shopping/ui/widgets/password_input.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

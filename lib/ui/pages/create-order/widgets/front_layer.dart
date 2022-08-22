@@ -1,73 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/create_order/create_order_bloc.dart';
-import 'package:shopping/blocs/create_order/create_order_event.dart';
-import 'package:shopping/blocs/create_order/create_order_state.dart';
 import 'package:shopping/blocs/products_list/products_list_bloc.dart';
-import 'package:shopping/blocs/products_list/products_list_event.dart';
-import 'package:shopping/ui/pages/create-order/widgets/order_product_item.dart';
+import 'package:shopping/ui/pages/create-order/widgets/product_item.dart';
+import 'package:shopping/ui/widgets/products_list.dart';
 
-class BackLayer extends StatefulWidget {
-  const BackLayer({super.key});
+class FrontLayer extends StatefulWidget {
+  const FrontLayer({super.key});
 
   @override
-  State<BackLayer> createState() => _BackLayerState();
+  State<FrontLayer> createState() => _FrontLayerState();
 }
 
-class _BackLayerState extends State<BackLayer> {
-  late final CreateOrderBloc _createOrderBloc;
+class _FrontLayerState extends State<FrontLayer> {
   late final ProductsListBloc _productsListBloc;
+  late final CreateOrderBloc _createOrderBloc;
 
   @override
   void initState() {
     super.initState();
-    _createOrderBloc = context.read();
     _productsListBloc = context.read();
+    _createOrderBloc = context.read();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreateOrderBloc, CreateOrderState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Added products',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                itemBuilder: (context, index) {
-                  final orderProduct = state.orderProducts[index];
-
-                  return OrderProductItem(
-                    orderProduct: orderProduct,
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 10,
-                ),
-                itemCount: state.orderProducts.length,
-              ),
-            ),
-          ],
-        );
-      },
+    return BlocProvider.value(
+      value: _productsListBloc,
+      child: ProductsList(
+        productBuilder: (product) {
+          return ProductItem(
+            product: product,
+            productsListBloc: _productsListBloc,
+            createOrderBloc: _createOrderBloc,
+          );
+        },
+      ),
     );
   }
 }

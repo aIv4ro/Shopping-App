@@ -15,7 +15,6 @@ import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_order_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_product_repository.dart';
 import 'package:shopping/domain/repositories/dio/dio_user_repository.dart';
-import 'package:shopping/repositories/firebase/user_repository.dart';
 import 'package:shopping/ui/pages/create-order/create_order_page.dart';
 import 'package:shopping/ui/pages/home/home_page.dart';
 import 'package:shopping/ui/pages/login/login_page.dart';

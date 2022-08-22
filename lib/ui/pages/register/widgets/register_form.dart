@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/ui/pages/register/widgets/register_button.dart';
+import 'package:shopping/ui/widgets/password_input.dart';
 import 'package:shopping/utils/validations.dart';
 import 'package:shopping/widgets/list_with_footer.dart';
-import 'package:shopping/widgets/password_input.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key, this.emails = const []});
