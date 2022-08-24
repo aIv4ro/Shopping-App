@@ -27,22 +27,33 @@ class _OrderPageState extends State<OrderPage> {
             );
           }
 
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Products',
-                    style: GoogleFonts.nunito(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
+          final order = state.order;
+          final orderProducts = order.orderProducts;
+
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Products',
+                  style: GoogleFonts.nunito(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
                   ),
-                  ...state.order.orderProducts.map(OrderProductItem.new)
-                ],
-              ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return OrderProductItem(orderProducts[index]);
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 10,
+                    ),
+                    itemCount: orderProducts.length,
+                  ),
+                )
+              ],
             ),
           );
         },
