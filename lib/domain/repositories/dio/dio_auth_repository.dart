@@ -65,7 +65,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   FutureOr<bool> tryAutoLogin({required String token}) async {
     dioClient.setToken(token: token);
     try {
-      final res = await dio.get('api/users/getUserById');
+      final res = await dio.get('api/user/getUserFromToken');
       final user = User.fromJson(json: res.data as Map<String, dynamic>);
       currentUser = user;
     } catch (err) {
@@ -77,7 +77,7 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
 
   @override
   FutureOr<User> getUserFromToken() async {
-    final res = await dio.get('api/users/getUserFromToken');
+    final res = await dio.get('api/user/getUserFromToken');
     final user = User.fromJson(json: res.data as Map<String, dynamic>);
     return user;
   }

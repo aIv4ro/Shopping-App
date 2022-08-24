@@ -43,7 +43,7 @@ class Order extends Entity {
     return {
       'fromUser': fromUser.id,
       'toUser': toUser.id,
-      'products': orderProducts.map((orderProduct) {
+      'orderProducts': orderProducts.map((orderProduct) {
         return orderProduct.toJson();
       }).toList(),
     };

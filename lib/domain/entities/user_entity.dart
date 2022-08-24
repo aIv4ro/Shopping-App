@@ -36,6 +36,11 @@ class User extends Entity {
 
   String get fullName => '$name $surname';
 
+  bool match(String? value) {
+    return email.contains(value?.toLowerCase() ?? '') ||
+        fullName.contains(value ?? '');
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return {

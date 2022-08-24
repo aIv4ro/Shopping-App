@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/create_order/create_order_bloc.dart';
+import 'package:shopping/blocs/create_order/create_order_event.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
 import 'package:shopping/blocs/login/login_bloc.dart';
 import 'package:shopping/blocs/order/order_bloc.dart';
@@ -106,7 +107,8 @@ final routes = <String, WidgetBuilder>{
           create: (_) => CreateOrderBloc(
             userRepository: context.read<DioUserRepository>(),
             orderRepository: context.read<DioOrderRepository>(),
-          ),
+            authRepository: context.read<DioAuthRepository>(),
+          )..add(const InitialLoadEvent()),
         )
       ],
       child: const CreateOrderPage(),

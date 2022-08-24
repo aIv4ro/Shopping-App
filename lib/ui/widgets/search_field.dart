@@ -8,10 +8,10 @@ class SearchField<T> extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     this.prefixIcon,
     this.maxSuggestionsHeight = double.infinity,
-    required this.onItemSelected,
-    required this.match,
-    required this.buildItem,
-    required this.itemSelectedString,
+    this.onItemSelected,
+    this.match,
+    this.buildItem,
+    this.itemSelectedString,
     required this.controller,
     this.validator,
   });
@@ -19,10 +19,10 @@ class SearchField<T> extends StatefulWidget {
   final List<T> items;
   final String? labelText;
   final Widget? prefixIcon;
-  final bool Function(T item, String input) match;
-  final Widget Function(T item) buildItem;
-  final void Function(T? value) onItemSelected;
-  final String Function(T value) itemSelectedString;
+  final bool Function(T item, String input)? match;
+  final Widget Function(T item)? buildItem;
+  final Function(T? value)? onItemSelected;
+  final String Function(T value)? itemSelectedString;
   final EdgeInsets padding;
   final double maxSuggestionsHeight;
   final TextEditingController controller;
@@ -34,18 +34,6 @@ class SearchField<T> extends StatefulWidget {
 
 class SearchFieldState<T> extends State<SearchField<T>> {
   List<T> suggestions = [];
-
-  void onChanged(String value) {
-    final newSuggestions = widget.items.where((item) {
-      return widget.match(item, value);
-    }).toList();
-
-    widget.onItemSelected(null);
-
-    setState(() => suggestions = [...newSuggestions]);
-  }
-
-  void clearSuggestions() => setState(() => suggestions = []);
 
   @override
   Widget build(BuildContext context) {
@@ -62,29 +50,21 @@ class SearchFieldState<T> extends State<SearchField<T>> {
             onChanged: onChanged,
             validator: widget.validator,
           ),
-          ConstrainedBox(
+          Container(
             constraints: BoxConstraints(
               maxHeight: widget.maxSuggestionsHeight,
             ),
+            width: double.infinity,
             child: Card(
               elevation: 10,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: suggestions.map((item) {
                     return InkWell(
-                      onTap: () {
-                        widget.onItemSelected(item);
-                        widget.controller.text =
-                            widget.itemSelectedString(item);
-
-                        final currentFocus = FocusScope.of(context);
-                        if (!currentFocus.hasPrimaryFocus) {
-                          currentFocus.focusedChild?.unfocus();
-                        }
-
-                        clearSuggestions();
-                      },
-                      child: widget.buildItem(item),
+                      onTap: () => _onItemSelected(item),
+                      child: widget.buildItem?.call(item) ??
+                          _buildDefaultWidget(item),
                     );
                   }).toList(),
                 ),
@@ -93,6 +73,44 @@ class SearchFieldState<T> extends State<SearchField<T>> {
           )
         ],
       ),
+    );
+  }
+
+  void onChanged(String value) {
+    final newSuggestions = widget.items.where((item) {
+      return widget.match?.call(item, value) ?? item.toString().contains(value);
+    }).toList();
+
+    widget.onItemSelected?.call(null);
+
+    setState(() => suggestions = [...newSuggestions]);
+  }
+
+  void clearSuggestions() => setState(() => suggestions = []);
+
+  void _onItemSelected(T? item) {
+    widget.onItemSelected?.call(item);
+
+    if (item == null) {
+      return;
+    }
+
+    widget.controller.text =
+        widget.itemSelectedString?.call(item) ?? item.toString();
+
+    final currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.focusedChild?.unfocus();
+    }
+
+    clearSuggestions();
+  }
+
+  Widget _buildDefaultWidget(T item) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      child: Text(item.toString()),
     );
   }
 }
