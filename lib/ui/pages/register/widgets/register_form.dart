@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/register/register_bloc.dart';
 import 'package:shopping/blocs/register/register_event.dart';
 import 'package:shopping/ui/pages/register/widgets/register_button.dart';
+import 'package:shopping/ui/widgets/list_with_footer.dart';
 import 'package:shopping/ui/widgets/password_input.dart';
 import 'package:shopping/utils/validations.dart';
-import 'package:shopping/widgets/list_with_footer.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key, this.emails = const []});
@@ -66,28 +66,36 @@ class _RegisterFormState extends State<RegisterForm> {
     return Form(
       key: _formKey,
       child: ListWithFooter(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        footer: [
-          RegisterButton(onPressed: _handleRegisterClick),
-        ],
-        children: [
-          TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              prefixIcon: Icon(Icons.email),
-            ),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: EmailValidation(emails: widget.emails).validate,
-            keyboardType: TextInputType.emailAddress,
+        footer: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [RegisterButton(onPressed: _handleRegisterClick)],
           ),
-          const SizedBox(height: 10),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: TextFormField(
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                prefixIcon: Icon(Icons.email),
+              ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: EmailValidation(emails: widget.emails).validate,
+              keyboardType: TextInputType.emailAddress,
+            ),
+          ),
+          const SizedBox(height: 5),
           PasswordInput(
             controller: _passwordController,
             labelText: 'Password',
             prefixIcon: const Icon(Icons.lock),
             validator: const PasswordValidation().validate,
             autovalidateMode: AutovalidateMode.onUserInteraction,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
           ),
           const SizedBox(height: 10),
           PasswordInput(
@@ -98,26 +106,33 @@ class _RegisterFormState extends State<RegisterForm> {
               password: _passwordController,
             ).validate,
             autovalidateMode: AutovalidateMode.onUserInteraction,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
           ),
           const SizedBox(height: 10),
-          TextFormField(
-            controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Name',
-              prefixIcon: Icon(Icons.person),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                prefixIcon: Icon(Icons.person),
+              ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              keyboardType: TextInputType.name,
             ),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: TextInputType.name,
           ),
           const SizedBox(height: 10),
-          TextFormField(
-            controller: _surnameController,
-            decoration: const InputDecoration(
-              labelText: 'Surname',
-              prefixIcon: Icon(Icons.person),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextFormField(
+              controller: _surnameController,
+              decoration: const InputDecoration(
+                labelText: 'Surname',
+                prefixIcon: Icon(Icons.person),
+              ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              keyboardType: TextInputType.name,
             ),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: TextInputType.name,
           ),
           const SizedBox(height: 10),
         ],
