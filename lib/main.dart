@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -12,11 +16,17 @@ import 'package:shopping/ui/routes.dart';
 import 'package:shopping/ui/theme/theme_bloc.dart';
 import 'package:shopping/ui/theme/theme_state.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  log('Handling a background message: ${message.notification}');
+}
+
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SharedPreferencesClient.init();
   final token = SharedPreferencesClient.getToken();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
     Shopping(
@@ -30,8 +40,14 @@ class Shopping extends StatelessWidget {
 
   final String? lastSessionToken;
 
+  Future<void> requestNotificationPermission() async {
+    final settings = await FirebaseMessaging.instance.requestPermission();
+    log('${settings.authorizationStatus}');
+  }
+
   @override
   Widget build(BuildContext context) {
+    requestNotificationPermission();
     FlutterNativeSplash.remove();
     final isValid = lastSessionToken != null;
 

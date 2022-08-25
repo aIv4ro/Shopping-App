@@ -1,41 +1,42 @@
 {
   "project_info": {
-    "project_number": "261035215594",
-    "project_id": "shopping-cd013",
-    "storage_bucket": "shopping-cd013.appspot.com"
+    "project_number": "285749294666",
+    "project_id": "shopping-d8b98",
+    "storage_bucket": "shopping-d8b98.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:261035215594:android:7b06a108a4f9aab9b4e593",
+        "mobilesdk_app_id": "1:285749294666:android:46be37f8bc17c40ebf58b3",
         "android_client_info": {
           "package_name": "com.alvaro.shopping"
         }
       },
       "oauth_client": [
         {
-          "client_id": "261035215594-7hd6s8fr70f8g3tbu8bdgbnspoubrtp1.apps.googleusercontent.com",
+          "client_id": "285749294666-f30f42p382nh1ft152qb9uspgvib11jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alvaro.shopping",
+            "certificate_hash": "6727692cb1d881da82df2c139cda1c9fae29777c"
+          }
+        },
+        {
+          "client_id": "285749294666-a5a7d62bb36tdglhn1vedh5fqnjkq5bg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCu_OmjTX9inKQmVoFP2RvcflmfJMauLsM"
+          "current_key": "AIzaSyCtss4mKI-mJWYGODDCLRHUaM7lmpUQR2E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "261035215594-7hd6s8fr70f8g3tbu8bdgbnspoubrtp1.apps.googleusercontent.com",
+              "client_id": "285749294666-a5a7d62bb36tdglhn1vedh5fqnjkq5bg.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "261035215594-2vka9sttfd2civer1fvto946t8vqbfji.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.alvaro.shopping.shopping"
-              }
             }
           ]
         }

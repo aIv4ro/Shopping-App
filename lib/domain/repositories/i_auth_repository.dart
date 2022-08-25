@@ -8,6 +8,7 @@ abstract class IAuthRepository {
   FutureOr<bool> login({
     required String email,
     required String password,
+    String? device,
     bool? keepLogged,
   });
   FutureOr<void> logout();

@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/home/home_bloc.dart';
@@ -24,6 +28,23 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _homeBloc = context.read();
     _themeBloc = context.read();
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      final orderId = message?.data['order'] as String?;
+      log('initial message: ${message?.data}');
+      if (orderId != null) {
+        Navigator.of(context).pushNamed(order, arguments: orderId);
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((message) {
+      log('on message: ${message.data}');
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      log('message openned: ${message.data}');
+      final orderId = message.data['order'] as String?;
+      Navigator.of(context).pushNamed(order, arguments: orderId);
+    });
   }
 
   void _handleLogout() {

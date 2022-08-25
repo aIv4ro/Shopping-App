@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/login/login_event.dart';
 import 'package:shopping/blocs/login/login_state.dart';
+import 'package:shopping/domain/notifications/firebase_notification.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
 import 'package:shopping/domain/repositories/i_user_repository.dart';
 
@@ -27,9 +30,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
 
     try {
+      final device = await FirebaseMessaging.instance.getToken();
+      log('$device');
       await authRepository.login(
         email: event.email,
         password: event.password,
+        device: device,
       );
 
       emit(
