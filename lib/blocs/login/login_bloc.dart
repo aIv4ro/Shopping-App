@@ -4,7 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/blocs/login/login_event.dart';
 import 'package:shopping/blocs/login/login_state.dart';
-import 'package:shopping/domain/notifications/firebase_notification.dart';
 import 'package:shopping/domain/repositories/i_auth_repository.dart';
 import 'package:shopping/domain/repositories/i_user_repository.dart';
 

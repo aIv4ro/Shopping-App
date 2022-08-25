@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:shopping/domain/entities/order_entity.dart';
 import 'package:shopping/domain/entities/order_product_entity.dart';
