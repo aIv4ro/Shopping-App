@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/entities/user_entity.dart';
 import 'package:shopping/domain/repositories/dio/dio_repository.dart';
@@ -42,8 +43,16 @@ class DioAuthRepository extends IAuthRepository implements DioRepository {
   }
 
   @override
-  void logout() {
-    dioClient.unsetToken();
+  Future<bool> logout() async {
+    final device = await FirebaseMessaging.instance.getToken();
+    return dio
+        .post('$basePath/logout', data: {'device': device})
+        .then((value) => true)
+        .catchError((err) => false)
+        .then((value) {
+          dioClient.unsetToken();
+          return value;
+        });
   }
 
   @override

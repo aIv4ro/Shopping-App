@@ -62,6 +62,8 @@ dependencies:
   # Shared Preferences
   shared_preferences: ^2.0.15
 
+  overlay_support: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

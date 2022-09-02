@@ -11,7 +11,7 @@ abstract class IAuthRepository {
     String? device,
     bool? keepLogged,
   });
-  FutureOr<void> logout();
+  FutureOr<bool> logout();
   FutureOr<User> getUserFromToken();
   FutureOr<bool> tryAutoLogin({required String token});
 

@@ -1,10 +1,10 @@
 import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shopping/domain/clients/dio_client.dart';
 import 'package:shopping/domain/clients/shared_preferences.dart';
 import 'package:shopping/domain/repositories/dio/dio_auth_repository.dart';
@@ -16,17 +16,12 @@ import 'package:shopping/ui/routes.dart';
 import 'package:shopping/ui/theme/theme_bloc.dart';
 import 'package:shopping/ui/theme/theme_state.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  log('Handling a background message: ${message.notification}');
-}
-
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SharedPreferencesClient.init();
   final token = SharedPreferencesClient.getToken();
   await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
     Shopping(
@@ -52,18 +47,20 @@ class Shopping extends StatelessWidget {
     final isValid = lastSessionToken != null;
 
     return _buildRepositoryProvider(
-      child: BlocProvider(
-        create: (context) => ThemeBloc(),
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-          builder: (context, state) {
-            return MaterialApp(
-              title: 'Shopping',
-              theme: state.theme.data,
-              routes: routes,
-              initialRoute: isValid ? home : login,
-              debugShowCheckedModeBanner: false,
-            );
-          },
+      child: OverlaySupport.global(
+        child: BlocProvider(
+          create: (context) => ThemeBloc(),
+          child: BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, state) {
+              return MaterialApp(
+                title: 'Shopping',
+                theme: state.theme.data,
+                routes: routes,
+                initialRoute: isValid ? home : login,
+                debugShowCheckedModeBanner: false,
+              );
+            },
+          ),
         ),
       ),
       token: isValid ? lastSessionToken : null,
